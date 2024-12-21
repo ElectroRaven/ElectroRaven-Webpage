@@ -1,0 +1,198 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+header {
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+header.light-mode {
+    background: linear-gradient(135deg, #f0f0f0, #d9d9d9);
+    color: #333;
+}
+
+header.light-mode h1 {
+    color: #333;
+}
+
+header.light-mode p {
+    color: #555;
+}
+
+nav ul li a.light-mode {
+    color: #007acc;
+}
+
+nav ul li a.light-mode:hover {
+    color: #005999;
+}
+
+
+header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 10px 0;
+    font-size: 2.8em;
+}
+
+header p {
+    font-size: 1.2em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #006dbb;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #006dbb;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.card {
+    padding: 40px;
+    margin: 20px 0;
+    background: #1e1e1e;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    color: #ffcc00;
+    margin-bottom: 20px;
+    font-size: 2.2em;
+    border-bottom: 2px solid #ffcc00;
+    padding-bottom: 10px;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.skill {
+    background: #007acc;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 25px;
+    flex: 1 1 30%;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.skill:hover {
+    transform: scale(1.1);
+}
+
+.project {
+    margin-bottom: 30px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 50px;
+    height: auto;
+    transition: transform 0.3s;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Hellmodus */
+body.light-mode {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+header.light-mode {
+    background: linear-gradient(135deg, #f0f0f0, #d9d9d9);
+}
+
+.card.light-mode {
+    background: #f9f9f9;
+    color: #333;
+}
+
+h2.light-mode {
+    color: #007acc;
+}
+
+footer.light-mode {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.mode-toggle {
+    background: none;
+    border: none;
+    color: #007acc;
+    font-size: 1.5em;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transition: transform 0.3s;
+}
+
+.mode-toggle:hover {
+    transform: scale(1.1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
