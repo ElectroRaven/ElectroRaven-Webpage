@@ -38,7 +38,6 @@ nav ul li a.light-mode:hover {
     color: #005999;
 }
 
-
 header .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -153,7 +152,6 @@ footer {
     transform: scale(1.1);
 }
 
-/* Hellmodus */
 body.light-mode {
     background-color: #ffffff;
     color: #333333;
@@ -190,6 +188,22 @@ footer.light-mode {
 }
 
 .mode-toggle:hover {
+    transform: scale(1.1);
+}
+
+#language-toggle {
+    background: none;
+    border: none;
+    color: #007acc;
+    font-size: 1.5em;
+    cursor: pointer;
+    position: absolute;
+    top: 70px;
+    right: 25px;
+    transition: transform 0.3s;
+}
+
+#language-toggle:hover {
     transform: scale(1.1);
 }
 
