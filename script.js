@@ -27,7 +27,7 @@ const texts = {
     },
     en: {
         title: "Maximilian Grill",
-        introduction: "17 years old | Computer Science student at HTL Donaustadt, Vienna",
+        introduction: "18 years old | Computer Science student at HTL Donaustadt, Vienna",
         aboutMe: "About Me",
         aboutMeText: "Hi, I'm Max, and I'm passionate about software development and recently also server administration 💻. Besides my technical side, I have a great fascination for aviation ✈️.<br><br>If you want to know more about me, feel free to look around here ;)",
         skills: "Skills",
