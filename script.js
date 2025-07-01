@@ -8,7 +8,7 @@ const h2Elements = document.querySelectorAll('h2');
 const texts = {
     de: {
         title: "Maximilian Grill",
-        introduction: "17 Jahre alt | Informatik Schüler an der HTL Donaustadt, Wien",
+        introduction: "18 Jahre alt | Informatik Schüler an der HTL Donaustadt, Wien",
         aboutMe: "Über mich",
         aboutMeText: "Servus ich bin Max und ich befasse mich leidenschaftlich gerne mit den Themen Software Entwicklung und seit neuestem auch mit Server Administration 💻. Neben meiner technischen Seite, trage ich auch eine große Faszination für die Luftfahrt ✈️ in mir.<br><br>Wenn du mehr über mich wissen möchtest schau dich hier gerne um ;)",
         skills: "Skills",
