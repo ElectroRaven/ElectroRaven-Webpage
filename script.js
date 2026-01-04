@@ -16,7 +16,7 @@ const texts = {
         projects: "Projekte/Erfahrungen",
         projectDescription: "Ein innovativer Bahnhofsnavigator, der Nutzern hilft, sich in Bahnhöfen zurechtzufinden. Mit einer benutzerfreundlichen Oberfläche und Echtzeitdaten bietet Bahnly eine nahtlose Erfahrung für Reisende.",
         socials: "Socials",
-        footer: "© 2024 Maximilian Grill. Alle Rechte vorbehalten.",
+        footer: "© 2024-2026 Maximilian Grill. Alle Rechte vorbehalten.",
         nav: {
             about: "Über mich",
             skills: "Skills",
@@ -35,7 +35,7 @@ const texts = {
         projects: "Projects/Experiences",
         projectDescription: "An innovative train station navigator that helps users find their way around train stations. With a user-friendly interface and real-time data, Bahnly provides a seamless experience for travelers.",
         socials: "Socials",
-        footer: "© 2024 Maximilian Grill. All rights reserved.",
+        footer: "© 2024-2026 Maximilian Grill. All rights reserved.",
         nav: {
             about: "About Me",
             skills: "Skills",

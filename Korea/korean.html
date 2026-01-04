@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Korean Learning</title>
+  <link rel="stylesheet" href="stylekorean.css" />
+</head>
+<body>
+
+  <header>
+    <h1>🇰🇷 Korean Learning</h1>
+    <p>Lerne Hangul richtig – lesen, tippen, verstehen</p>
+  </header>
+
+  <main>
+    <section id="lesson">
+      <h2 id="question">?</h2>
+
+      <input
+        type="text"
+        id="answer"
+        placeholder="Tippe die Aussprache (z.B. a, g, eo)"
+        autofocus
+      />
+
+      <button id="check">Überprüfen</button>
+
+      <p id="feedback"></p>
+    </section>
+
+    <section id="stats">
+      <p>✔ Richtig: <span id="correct">0</span></p>
+      <p>✖ Falsch: <span id="wrong">0</span></p>
+    </section>
+  </main>
+
+  <footer>
+    <small>Built for ElectroRaven · Korean Journey 🇰🇷</small>
+  </footer>
+
+  <script src="appkorean.js"></script>
+</body>
+</html>

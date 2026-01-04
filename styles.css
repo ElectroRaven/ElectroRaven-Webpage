@@ -210,3 +210,57 @@ footer.light-mode {
 html {
     scroll-behavior: smooth;
 }
+
+.korean-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background: linear-gradient(145deg, #0096ff, #004c97);
+    color: #ffffff;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.korean-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.korean-button:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(145deg, #00a8ff, #005ab6);
+}
+
+.korean-button:hover::after {
+    opacity: 1;
+}
+
+.korean-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 150, 255, 0.45);
+}
+
+.korean-button__flag {
+    font-size: 1.4em;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+}
+
+.korean-button__label {
+    white-space: nowrap;
+}
