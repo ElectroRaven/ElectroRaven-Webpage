@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Koreanisch Silben Trainer</title>
+	<link rel="stylesheet" href="koreasilbentrennerDesign.css" />
+</head>
+<body>
+	<header class="page-header">
+		<div>
+			<p class="eyebrow">Silben Trainer</p>
+			<h1>Hangeul Silben &uuml;ben</h1>
+			<p class="lede">Gleicher Flow wie der Zeichen-Trainer – jetzt mit Silben aus denselben Zeichen.</p>
+		</div>
+	</header>
+
+	<main>
+		<section id="lesson" class="lesson">
+			<h2 id="question" aria-live="polite">?</h2>
+			<div class="controls">
+				<label for="advanced-toggle">
+					<input type="checkbox" id="advanced-toggle" />
+					Advanced: Silben mit 3 Zeichen (CVC)
+				</label>
+			</div>
+			<label class="sr-only" for="answer">Romanisierung eingeben</label>
+			<input
+				type="text"
+				id="answer"
+				placeholder="z.B. ga, eo, yo"
+				autofocus
+			/>
+			<button id="check">&Uuml;berpr&uuml;fen</button>
+			<button id="restart" hidden>Neu starten</button>
+			<p id="feedback" aria-live="polite"></p>
+		</section>
+
+		<section class="stats" aria-live="polite">
+			<p>✔ Richtig: <span id="correct-count">0</span></p>
+			<p>✖ Falsch: <span id="wrong-count">0</span></p>
+			<p>⏱ Zeit: <span id="timer">00:00</span></p>
+		</section>
+	</main>
+
+	<footer class="page-footer">
+		<small>Privates Lernprojekt • Silben aus dem Hangeul-Grundset</small>
+	</footer>
+
+	<script src="koreasilbenApp.js"></script>
+</body>
+</html>
