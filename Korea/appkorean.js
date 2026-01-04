@@ -27,6 +27,8 @@ const lessonEl = document.getElementById("lesson");
 const questionEl = document.getElementById("question");
 const inputEl = document.getElementById("answer");
 const feedbackEl = document.getElementById("feedback");
+const checkEl = document.getElementById("check");
+const restartEl = document.getElementById("restart");
 
 /* ===== Layout ===== */
 const wrapper = document.createElement("div");
@@ -79,8 +81,17 @@ function next() {
     questionEl.textContent = "🎉 Fertig!";
     inputEl.disabled = true;
     feedbackEl.textContent = "Alle Zeichen erfolgreich gelernt!";
+    if (checkEl) checkEl.hidden = true;
+    if (restartEl) {
+      restartEl.hidden = false;
+      restartEl.focus();
+    }
     return;
   }
+
+  if (restartEl) restartEl.hidden = true;
+  inputEl.disabled = false;
+  if (checkEl) checkEl.hidden = false;
 
   current = pool[Math.floor(Math.random() * pool.length)];
   questionEl.textContent = current.char;
@@ -144,6 +155,30 @@ function updateList(id, set, showCounter = false) {
       : char;
     el.appendChild(li);
   });
+}
+
+function resetSession() {
+  unseen.clear();
+  lessons.forEach(l => unseen.add(l.char));
+  correctSet.clear();
+  wrongSet.clear();
+  for (const key in wrongCounter) {
+    if (Object.prototype.hasOwnProperty.call(wrongCounter, key)) {
+      delete wrongCounter[key];
+    }
+  }
+
+  inputEl.value = "";
+  inputEl.disabled = false;
+  feedbackEl.textContent = "";
+  if (restartEl) restartEl.hidden = true;
+  if (checkEl) checkEl.hidden = false;
+
+  next();
+}
+
+if (restartEl) {
+  restartEl.addEventListener("click", resetSession);
 }
 
 next();
