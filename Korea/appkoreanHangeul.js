@@ -1,4 +1,4 @@
-const lessons = [
+const baseLessons = [
   { char: "ㅏ", answer: "a" }, { char: "ㅑ", answer: "ya" },
   { char: "ㅓ", answer: "eo" }, { char: "ㅕ", answer: "yeo" },
   { char: "ㅗ", answer: "o" }, { char: "ㅛ", answer: "yo" },
@@ -14,10 +14,31 @@ const lessons = [
   { char: "ㅇ (Anfang)", answer: "" }, { char: "ㅇ (Ende)", answer: "ng" }
 ];
 
+const batchimLessons = [
+  { char: "ㄱ (Batchim)", answer: "k" },
+  { char: "ㄲ (Batchim)", answer: "k" },
+  { char: "ㅋ (Batchim)", answer: "k" },
+  { char: "ㄴ (Batchim)", answer: "n" },
+  { char: "ㄷ (Batchim)", answer: "t" },
+  { char: "ㅅ (Batchim)", answer: "t" },
+  { char: "ㅆ (Batchim)", answer: "t" },
+  { char: "ㅈ (Batchim)", answer: "t" },
+  { char: "ㅊ (Batchim)", answer: "t" },
+  { char: "ㅌ (Batchim)", answer: "t" },
+  { char: "ㅎ (Batchim)", answer: "t" },
+  { char: "ㄹ (Batchim)", answer: "l" },
+  { char: "ㅁ (Batchim)", answer: "m" },
+  { char: "ㅂ (Batchim)", answer: "p" },
+  { char: "ㅍ (Batchim)", answer: "p" },
+  { char: "ㅇ (Batchim)", answer: "ng" }
+];
+
+let activeLessons = baseLessons;
+
 let current;
 
 // Sets
-const unseen = new Set(lessons.map(l => l.char));
+const unseen = new Set();
 const correctSet = new Set();
 const wrongSet = new Set();
 const wrongCounter = {}; // wie oft falsche Zeichen korrekt beantwortet wurden
@@ -69,6 +90,16 @@ wrapper.appendChild(leftBox);
 wrapper.appendChild(lessonEl);
 wrapper.appendChild(rightBox);
 
+const modeToggle = document.createElement("button");
+modeToggle.textContent = "Batchim-Training: Aus";
+modeToggle.style.marginBottom = "1rem";
+modeToggle.addEventListener("click", () => {
+  activeLessons = activeLessons === baseLessons ? batchimLessons : baseLessons;
+  modeToggle.textContent = activeLessons === batchimLessons ? "Batchim-Training: An" : "Batchim-Training: Aus";
+  resetSession();
+});
+wrapper.parentNode.insertBefore(modeToggle, wrapper);
+
 /* ===== Logik ===== */
 
 function next() {
@@ -77,10 +108,10 @@ function next() {
 
   if (unseen.size > 0) {
     // noch neue Zeichen vorhanden
-    pool = lessons.filter(l => unseen.has(l.char));
+    pool = activeLessons.filter(l => unseen.has(l.char));
   } else if (wrongSet.size > 0) {
     // alle neuen Zeichen fertig, jetzt die Fehler abarbeiten
-    pool = lessons.filter(l => wrongSet.has(l.char));
+    pool = activeLessons.filter(l => wrongSet.has(l.char));
   } else {
     showFinished();
     return;
@@ -166,7 +197,7 @@ function updateList(id, set, showCounter = false) {
 function resetSession() {
   finished = false;
   unseen.clear();
-  lessons.forEach(l => unseen.add(l.char));
+  activeLessons.forEach(l => unseen.add(l.char));
   correctSet.clear();
   wrongSet.clear();
   for (const key in wrongCounter) {
