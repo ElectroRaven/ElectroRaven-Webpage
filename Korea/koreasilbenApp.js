@@ -113,6 +113,8 @@ const unseen = new Set();
 const correctSet = new Set();
 const wrongSet = new Set();
 const wrongCounter = {};
+let timerId = null;
+let startTime = null;
 
 // DOM
 const lessonEl = document.getElementById("lesson");
@@ -124,6 +126,7 @@ const restartEl = document.getElementById("restart");
 const advancedToggle = document.getElementById("advanced-toggle");
 const correctCountEl = document.getElementById("correct-count");
 const wrongCountEl = document.getElementById("wrong-count");
+const timerEl = document.getElementById("timer");
 
 // Layout container (ähnlich wie Hangeul-Trainer)
 const board = document.createElement("div");
@@ -191,6 +194,7 @@ function next() {
 			restartEl.hidden = false;
 			restartEl.focus();
 		}
+		stopTimer();
 		return;
 	}
 
@@ -259,6 +263,7 @@ function updateList(id, set, showCounter = false) {
 function updateStats() {
 	if (correctCountEl) correctCountEl.textContent = correctSet.size.toString();
 	if (wrongCountEl) wrongCountEl.textContent = wrongSet.size.toString();
+	if (timerEl && startTime) timerEl.textContent = formatElapsed(Date.now() - startTime);
 }
 
 function resetSession() {
@@ -272,6 +277,7 @@ function resetSession() {
 	feedbackEl.textContent = "";
 	if (restartEl) restartEl.hidden = true;
 	if (checkEl) checkEl.hidden = false;
+	startTimer();
 	updateStats();
 	next();
 }
@@ -291,4 +297,28 @@ if (advancedToggle) {
 }
 
 rebuildLessons(false);
-next();
+resetSession();
+
+function startTimer() {
+	stopTimer();
+	startTime = Date.now();
+	if (timerEl) timerEl.textContent = "00:00";
+	timerId = setInterval(() => {
+		if (!startTime) return;
+		if (timerEl) timerEl.textContent = formatElapsed(Date.now() - startTime);
+	}, 1000);
+}
+
+function stopTimer() {
+	if (timerId) {
+		clearInterval(timerId);
+		timerId = null;
+	}
+}
+
+function formatElapsed(ms) {
+	const totalSeconds = Math.floor(ms / 1000);
+	const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+	const seconds = String(totalSeconds % 60).padStart(2, "0");
+	return `${minutes}:${seconds}`;
+}

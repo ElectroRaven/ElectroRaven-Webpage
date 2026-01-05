@@ -21,6 +21,9 @@ const unseen = new Set(lessons.map(l => l.char));
 const correctSet = new Set();
 const wrongSet = new Set();
 const wrongCounter = {}; // wie oft falsche Zeichen korrekt beantwortet wurden
+let timerId = null;
+let startTime = null;
+let finished = false;
 
 // DOM
 const lessonEl = document.getElementById("lesson");
@@ -29,6 +32,7 @@ const inputEl = document.getElementById("answer");
 const feedbackEl = document.getElementById("feedback");
 const checkEl = document.getElementById("check");
 const restartEl = document.getElementById("restart");
+const timerEl = document.getElementById("timer");
 
 /* ===== Layout ===== */
 const wrapper = document.createElement("div");
@@ -68,6 +72,7 @@ wrapper.appendChild(rightBox);
 /* ===== Logik ===== */
 
 function next() {
+  if (finished) return;
   let pool;
 
   if (unseen.size > 0) {
@@ -77,15 +82,7 @@ function next() {
     // alle neuen Zeichen fertig, jetzt die Fehler abarbeiten
     pool = lessons.filter(l => wrongSet.has(l.char));
   } else {
-    // alles erledigt
-    questionEl.textContent = "🎉 Fertig!";
-    inputEl.disabled = true;
-    feedbackEl.textContent = "Alle Zeichen erfolgreich gelernt!";
-    if (checkEl) checkEl.hidden = true;
-    if (restartEl) {
-      restartEl.hidden = false;
-      restartEl.focus();
-    }
+    showFinished();
     return;
   }
 
@@ -109,12 +106,14 @@ inputEl.addEventListener("keydown", e => {
 });
 
 function handleAnswer() {
+  if (finished) return;
   const value = inputEl.value.trim().toLowerCase();
+  const isCorrect = value === current.answer;
 
   // Neues Zeichen entfernen
   if (unseen.has(current.char)) unseen.delete(current.char);
 
-  if (value === current.answer) {
+  if (isCorrect) {
     // richtig
     if (wrongSet.has(current.char)) {
       wrongCounter[current.char] = (wrongCounter[current.char] || 0) + 1;
@@ -135,7 +134,13 @@ function handleAnswer() {
   }
 
   updateLists();
-  setTimeout(next, 300);
+  if (unseen.size === 0 && wrongSet.size === 0) {
+    showFinished();
+    return;
+  }
+
+  const delay = isCorrect ? 300 : 1200;
+  setTimeout(next, delay);
 }
 
 // Update-Listen
@@ -143,6 +148,7 @@ function updateLists() {
   updateList("unseen", unseen);
   updateList("correct", correctSet);
   updateList("wrong", wrongSet, true);
+  updateTimer();
 }
 
 function updateList(id, set, showCounter = false) {
@@ -158,6 +164,7 @@ function updateList(id, set, showCounter = false) {
 }
 
 function resetSession() {
+  finished = false;
   unseen.clear();
   lessons.forEach(l => unseen.add(l.char));
   correctSet.clear();
@@ -173,12 +180,59 @@ function resetSession() {
   feedbackEl.textContent = "";
   if (restartEl) restartEl.hidden = true;
   if (checkEl) checkEl.hidden = false;
-
+  startTimer();
   next();
 }
 
 if (restartEl) {
   restartEl.addEventListener("click", resetSession);
+  restartEl.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+    }
+  });
+  restartEl.addEventListener("keyup", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+    }
+  });
 }
 
-next();
+function showFinished() {
+  finished = true;
+  questionEl.textContent = "🎉 Fertig!";
+  feedbackEl.textContent = "Alle Zeichen erfolgreich gelernt!";
+  inputEl.value = "";
+  inputEl.disabled = true;
+  if (checkEl) checkEl.hidden = true;
+  if (restartEl) {
+    restartEl.hidden = false;
+  }
+  stopTimer();
+}
+
+function startTimer() {
+  stopTimer();
+  startTime = Date.now();
+  if (timerEl) timerEl.textContent = "00:00";
+  timerId = setInterval(updateTimer, 1000);
+}
+
+function stopTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+  startTime = null;
+}
+
+function updateTimer() {
+  if (!timerEl || !startTime) return;
+  const elapsed = Date.now() - startTime;
+  const totalSeconds = Math.floor(elapsed / 1000);
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  timerEl.textContent = `${minutes}:${seconds}`;
+}
+
+resetSession();
