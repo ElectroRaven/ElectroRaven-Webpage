@@ -18,9 +18,9 @@ const Contact = () => {
 
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
                     {[
-                        { icon: <Github size={32} />, label: "GitHub", href: "#" },
-                        { icon: <Linkedin size={32} />, label: "LinkedIn", href: "#" },
-                        { icon: <Mail size={32} />, label: "Email", href: "mailto:contact@example.com" },
+                        { icon: <Github size={32} />, label: "GitHub", href: "https://github.com/ElectroRaven" },
+                        { icon: <Linkedin size={32} />, label: "LinkedIn", href: "https://www.linkedin.com/in/maximilian-grill-54abbb27a/" },
+                       // { icon: <Mail size={32} />, label: "Email", href: "mailto:contact@example.com" },
                         // { icon: <Twitter size={32} />, label: "Twitter", href: "#" }
                     ].map((social, index) => (
                         <motion.a
