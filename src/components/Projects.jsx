@@ -2,28 +2,29 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 
-const projects = [
-    {
-        title: "Bahnly - Bahnhofsnavigator",
-        description: "Ein innovativer Bahnhofsnavigator, der Nutzern hilft, sich in Bahnhöfen zurechtzufinden. Mit einer benutzerfreundlichen Oberfläche und Echtzeitdaten bietet Bahnly eine nahtlose Erfahrung für Reisende.",
-        tags: ["Web App", "Navigation", "Real-time"],
-        link: "#", // Placeholder
-    },
-    {
-        title: "Korea Lernplattform",
-        description: "Eine Plattform zum Lernen der koreanischen Sprache.",
-        tags: ["Education", "Language", "Web"],
-        link: "https://electroraven.pages.dev/Korea/koreastartpage.html",
-    },
-    {
-        title: "Leap",
-        description: "Eine eigens entwickelte, anfängerorientierte Programmiersprache.",
-        tags: ["Compiler", "Language Design", "Education"],
-        link: "#",
-    }
-];
-
 const Projects = () => {
+    const basePath = import.meta.env.BASE_URL || '/';
+    const projects = [
+        {
+            title: "Bahnly - Bahnhofsnavigator",
+            description: "Ein innovativer Bahnhofsnavigator, der Nutzern hilft, sich in Bahnhöfen zurechtzufinden. Mit einer benutzerfreundlichen Oberfläche und Echtzeitdaten bietet Bahnly eine nahtlose Erfahrung für Reisende.",
+            tags: ["Web App", "Navigation", "Real-time"],
+            link: "#", // Placeholder
+        },
+        {
+            title: "Korea Lernplattform",
+            description: "Eine Plattform zum Lernen der koreanischen Sprache.",
+            tags: ["Education", "Language", "Web"],
+            link: `${basePath}Korea/koreastartpage.html`,
+        },
+        {
+            title: "Leap",
+            description: "Eine eigens entwickelte, anfängerorientierte Programmiersprache.",
+            tags: ["Compiler", "Language Design", "Education"],
+            link: "#",
+        }
+    ];
+
     return (
         <section id="projects" className="section">
             <motion.div
