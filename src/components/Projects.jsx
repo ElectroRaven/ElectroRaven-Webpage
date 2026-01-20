@@ -3,15 +3,19 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import leapImage from '../assets/LeapBannerTransparent.png';
 import bahnlyImage from '../assets/BahnlyBanner.png';
+import bahnlyImageLight from '../assets/BahnlyBannerDarkTransparent.png';
 import koroLearnImage from '../assets/KoroLearnBanner.png';
+import koroLearnImageLight from '../assets/KoroLearnBannerDarkTransparent.png';
+import leapImageLight from '../assets/LeapBannerDarkTransparent.png';
 
 const projects = [
     {
         title: "Bahnly - Bahnhofsnavigator",
         description: "Ein innovativer Bahnhofsnavigator, der Nutzern hilft, sich in Bahnhöfen zurechtzufinden. Mit einer benutzerfreundlichen Oberfläche und Echtzeitdaten bietet Bahnly eine nahtlose Erfahrung für Reisende.",
         tags: ["Mobile App", "Navigation", "Real-time"],
-        link: "#", // Placeholder
+        link: "#",
         image: bahnlyImage,
+        imageLight: bahnlyImageLight,
     },
     {
         title: "KoroLearn - Koreanisch Lernplattform",
@@ -19,17 +23,19 @@ const projects = [
         tags: ["Education", "Language", "Web"],
         link: "https://electroraven.pages.dev/Korea/koreastartpage.html",
         image: koroLearnImage,
+        imageLight: koroLearnImageLight,
     },
     {
         title: "Leap",
         description: "Eine eigens entwickelte, anfängerorientierte Programmiersprache. Mit selbst designtem Syntax und einem eigens entwickelten Interpreter Plugin in VSC.",
         tags: ["Compiler", "Language Design", "Education"],
         link: "#",
-        image: leapImage
+        image: leapImage,
+        imageLight: leapImageLight
     }
 ];
 
-const Projects = () => {
+const Projects = ({ theme }) => {
     return (
         <section id="projects" className="section">
             <motion.div
@@ -60,7 +66,7 @@ const Projects = () => {
                             }}>
                                 {project.image ? (
                                     <img
-                                        src={project.image}
+                                        src={(theme === 'light' && project.imageLight) ? project.imageLight : project.image}
                                         alt={project.title}
                                         style={{
                                             width: '100%',
