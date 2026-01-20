@@ -91,38 +91,39 @@ a {
 }
 
 .hero {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-	gap: 24px;
-	padding: 44px 7vw 28px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
+	text-align: center;
+	padding: 12vh 7vw;
+	min-height: 50vh;
+	background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('KoroLearnBanner.png');
+	background-size: cover;
+	background-position: center;
+	border-bottom: 1px solid var(--line);
+}
+
+.hero-text {
+	max-width: 700px;
 }
 
 .hero-text h1 {
 	font-size: clamp(2rem, 4vw, 2.6rem);
-	margin: 10px 0 12px;
-	line-height: 1.1;
+	margin: 0 0 6px;
 }
 
 .lede {
 	color: var(--muted);
-	margin: 0 0 16px;
-	max-width: 620px;
+	margin: 0 0 24px;
+	font-size: 1.1rem;
 	line-height: 1.5;
-}
-
-.eyebrow {
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	color: var(--accent);
-	font-weight: 700;
-	font-size: 0.8rem;
-	margin: 0 0 6px;
 }
 
 .hero-actions {
 	display: flex;
-	gap: 10px;
+	gap: 12px;
+	justify-content: center;
 	flex-wrap: wrap;
 }
 
@@ -138,26 +139,34 @@ a {
 .module-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-	gap: 12px;
-	margin-top: 16px;
+	gap: 24px;
+	margin-top: 0;
+	padding-top: 20px;
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .module-card {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 16px 14px;
-	background: var(--surface);
-	border: 1px solid var(--line);
-	border-radius: 14px;
-	min-height: 180px;
-	transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+	padding: 24px;
+	background: rgba(17, 26, 46, 0.6);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 20px;
+	min-height: 200px;
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .module-card:hover {
-	transform: translateY(-2px);
-	border-color: rgba(255, 255, 255, 0.18);
-	background: #13203a;
+	transform: translateY(-5px);
+	border-color: rgba(125, 211, 252, 0.3);
+	background: rgba(19, 32, 58, 0.8);
+	box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card-top h3 {

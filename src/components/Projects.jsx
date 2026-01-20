@@ -21,7 +21,7 @@ const projects = [
         title: "KoroLearn - Koreanisch Lernplattform",
         description: "Eine Plattform zum Lernen der koreanischen Sprache.",
         tags: ["Education", "Language", "Web"],
-        link: "https://electroraven.pages.dev/Korea/koreastartpage.html",
+        link: "/Korea/koreastartpage.html",
         image: koroLearnImage,
         imageLight: koroLearnImageLight,
     },

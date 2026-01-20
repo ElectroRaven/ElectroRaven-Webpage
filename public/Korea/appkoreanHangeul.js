@@ -57,26 +57,18 @@ const timerEl = document.getElementById("timer");
 
 /* ===== Layout ===== */
 const wrapper = document.createElement("div");
-wrapper.style.display = "flex";
-wrapper.style.gap = "1.5rem";
-wrapper.style.alignItems = "flex-start";
+wrapper.className = "game-wrapper";
 
 const makeBox = (title, id) => {
   const box = document.createElement("div");
-  box.style.width = "200px";
-  box.style.background = "#020617";
-  box.style.borderRadius = "12px";
-  box.style.padding = "1rem";
-  box.style.boxShadow = "0 10px 30px rgba(0,0,0,.4)";
+  box.className = "status-box";
   box.innerHTML = `<h3>${title}</h3><ul id="${id}" style="padding-left:1rem"></ul>`;
   return box;
 };
 
 const leftBox = makeBox("🟡 Noch offen", "unseen");
 const rightBox = document.createElement("div");
-rightBox.style.display = "flex";
-rightBox.style.flexDirection = "column";
-rightBox.style.gap = "1rem";
+rightBox.className = "right-column";
 
 const correctBox = makeBox("✅ Richtig", "correct");
 const wrongBox = makeBox("❌ Falsch", "wrong");
@@ -92,7 +84,7 @@ wrapper.appendChild(rightBox);
 
 const modeToggle = document.createElement("button");
 modeToggle.textContent = "Batchim-Training: Aus";
-modeToggle.style.marginBottom = "1rem";
+modeToggle.className = "mode-toggle";
 modeToggle.addEventListener("click", () => {
   activeLessons = activeLessons === baseLessons ? batchimLessons : baseLessons;
   modeToggle.textContent = activeLessons === batchimLessons ? "Batchim-Training: An" : "Batchim-Training: Aus";
