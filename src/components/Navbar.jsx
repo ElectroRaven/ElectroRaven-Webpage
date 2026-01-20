@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X } from 'lucide-react';
+import logo from '../assets/logo-transparent.png';
 
 const Navbar = ({ theme, toggleTheme }) => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -43,8 +44,8 @@ const Navbar = ({ theme, toggleTheme }) => {
             }}
         >
             <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '1.25rem', cursor: 'pointer' }} onClick={() => scrollToSection('hero')}>
-                    MG
+                <div style={{ fontWeight: 'bold', fontSize: '1.25rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => scrollToSection('hero')}>
+                    <img src={logo} alt="Logo" style={{ height: '40px', width: 'auto' }} />
                 </div>
 
                 {/* Desktop Menu */}

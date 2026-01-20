@@ -1,25 +1,31 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
+import leapImage from '../assets/LeapBannerTransparent.png';
+import bahnlyImage from '../assets/BahnlyBanner.png';
+import koroLearnImage from '../assets/KoroLearnBanner.png';
 
 const projects = [
     {
         title: "Bahnly - Bahnhofsnavigator",
         description: "Ein innovativer Bahnhofsnavigator, der Nutzern hilft, sich in Bahnhöfen zurechtzufinden. Mit einer benutzerfreundlichen Oberfläche und Echtzeitdaten bietet Bahnly eine nahtlose Erfahrung für Reisende.",
-        tags: ["Web App", "Navigation", "Real-time"],
+        tags: ["Mobile App", "Navigation", "Real-time"],
         link: "#", // Placeholder
+        image: bahnlyImage,
     },
     {
-        title: "Korea Lernplattform",
+        title: "KoroLearn - Koreanisch Lernplattform",
         description: "Eine Plattform zum Lernen der koreanischen Sprache.",
         tags: ["Education", "Language", "Web"],
         link: "https://electroraven.pages.dev/Korea/koreastartpage.html",
+        image: koroLearnImage,
     },
     {
         title: "Leap",
-        description: "Eine eigens entwickelte, anfängerorientierte Programmiersprache.",
+        description: "Eine eigens entwickelte, anfängerorientierte Programmiersprache. Mit selbst designtem Syntax und einem eigens entwickelten Interpreter Plugin in VSC.",
         tags: ["Compiler", "Language Design", "Education"],
         link: "#",
+        image: leapImage
     }
 ];
 
@@ -49,10 +55,23 @@ const Projects = () => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                color: 'var(--text-secondary)'
+                                color: 'var(--text-secondary)',
+                                overflow: 'hidden'
                             }}>
-                                {/* Image Placeholder */}
-                                <span>Project Image</span>
+                                {project.image ? (
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'contain',
+                                            padding: '1rem'
+                                        }}
+                                    />
+                                ) : (
+                                    <span>Project Image</span>
+                                )}
                             </div>
                             <h3 style={{ fontSize: '1.1rem', marginTop: 0, marginBottom: '0.5rem' }}>{project.title}</h3>
                             <p style={{ color: 'var(--text-secondary)', flex: 1, fontSize: '0.9rem', marginBottom: '0.5rem' }}>{project.description}</p>
