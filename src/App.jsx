@@ -26,7 +26,7 @@ function App() {
                 <About />
                 <Skills />
                 <Certifications />
-                <Projects />
+                <Projects theme={theme} />
                 <Contact />
             </main>
             <footer style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
