@@ -130,11 +130,11 @@ const timerEl = document.getElementById("timer");
 
 // Layout container (ähnlich wie Hangeul-Trainer)
 const board = document.createElement("div");
-board.className = "board";
+board.className = "game-wrapper";
 
 function makeCard(title, id) {
 	const box = document.createElement("div");
-	box.className = "info-card";
+	box.className = "status-box";
 	box.innerHTML = `<h3>${title}</h3><ul id="${id}" class="info-list"></ul>`;
 	return box;
 }
@@ -144,12 +144,29 @@ const correctCard = makeCard("✅ Richtig", "correct");
 const wrongCard = makeCard("❌ Falsch", "wrong");
 
 const sideColumn = document.createElement("div");
-sideColumn.style.display = "grid";
-sideColumn.style.gap = "10px";
+sideColumn.className = "right-column";
 sideColumn.append(correctCard, wrongCard);
 
 lessonEl.parentNode.insertBefore(board, lessonEl);
 board.append(openCard, lessonEl, sideColumn);
+
+// Toggle Button Implementation
+const toggleContainer = document.getElementById("toggle-container");
+const modeToggle = document.createElement("button");
+modeToggle.textContent = "Advanced Mode (3 Zeichen): Aus";
+modeToggle.className = "mode-toggle";
+modeToggle.addEventListener("click", () => {
+	advancedMode = !advancedMode;
+	toggleContainer.innerHTML = ""; // Clear to prevent duplicates if re-running
+	toggleContainer.appendChild(modeToggle); // Re-append
+	modeToggle.textContent = advancedMode ? "Advanced Mode (3 Zeichen): An" : "Advanced Mode (3 Zeichen): Aus";
+	rebuildLessons(advancedMode);
+	resetSession();
+});
+
+if (toggleContainer) {
+	toggleContainer.appendChild(modeToggle);
+}
 
 // Build lessons depending on mode
 function rebuildLessons(useCoda) {
@@ -288,13 +305,7 @@ if (inputEl) inputEl.addEventListener("keydown", e => {
 });
 if (restartEl) restartEl.addEventListener("click", resetSession);
 
-if (advancedToggle) {
-	advancedToggle.addEventListener("change", () => {
-		advancedMode = advancedToggle.checked;
-		rebuildLessons(advancedMode);
-		resetSession();
-	});
-}
+// Old listener removed since we use button now
 
 rebuildLessons(false);
 resetSession();

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Koreanisch Silben Trainer</title>
 	<link rel="stylesheet" href="koreasilbentrennerDesign.css" />
 </head>
+
 <body>
 	<nav class="top-nav">
 		<a class="back-link" href="koreastartpage.html">Zurück zur Lernplattformübersicht</a>
@@ -21,19 +23,11 @@
 	<main>
 		<section id="lesson" class="lesson">
 			<h2 id="question" aria-live="polite">?</h2>
-			<div class="controls">
-				<label for="advanced-toggle">
-					<input type="checkbox" id="advanced-toggle" />
-					Advanced: Silben mit 3 Zeichen (CVC)
-				</label>
+			<div class="controls" id="toggle-container">
+				<!-- Toggle will be injected here by JS -->
 			</div>
 			<label class="sr-only" for="answer">Romanisierung eingeben</label>
-			<input
-				type="text"
-				id="answer"
-				placeholder="z.B. ga, eo, yo"
-				autofocus
-			/>
+			<input type="text" id="answer" placeholder="z.B. ga, eo, yo" autofocus />
 			<button id="check">&Uuml;berpr&uuml;fen</button>
 			<button id="restart" hidden>Neu starten</button>
 			<p id="feedback" aria-live="polite"></p>
@@ -52,4 +46,5 @@
 
 	<script src="koreasilbenApp.js"></script>
 </body>
+
 </html>
