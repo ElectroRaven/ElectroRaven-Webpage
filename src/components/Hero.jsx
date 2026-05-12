@@ -62,7 +62,7 @@ const Hero = () => {
                     marginLeft: 'auto',
                     marginRight: 'auto'
                 }}>
-                    18 Jahre alt | Informatik Schüler an der HTL Donaustadt, Wien 🇦🇹
+                    19 Jahre alt | Informatik Schüler an der HTL Donaustadt, Wien 🇦🇹
                 </p>
 
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
