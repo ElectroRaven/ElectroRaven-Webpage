@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leap Language</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./leap.css" />
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <article class="hero-panel">
+        <span class="badge">Language Design Project</span>
+        <h1>Leap is a beginner-first programming language with clean, human syntax.</h1>
+        <p>
+          Leap kombiniert eine klare Syntax mit didaktischem Fokus: Man kann dieselben Konzepte in
+          <span class="highlight">English</span>,
+          <span class="highlight">Deutsch</span>
+          und
+          <span class="highlight">Norwegisch</span>
+          schreiben. So bleibt die Lernkurve flach, waehrend Variablen, Bedingungen, Schleifen,
+          Funktionen und Dateioperationen praxisnah gelernt werden.
+        </p>
+        <p>
+          Das Beispiel unten stammt direkt aus der Leap Testdatei und zeigt, wie Leap mit mehreren
+          Sprachstilen im selben Oekosystem funktioniert.
+        </p>
+      </article>
+
+      <aside class="hero-panel mini-stats">
+        <div class="mini">
+          <h3>3</h3>
+          <p>Programmierbare Sprachmodi: EN, DE, NO</p>
+        </div>
+        <div class="mini">
+          <h3>15+</h3>
+          <p>Praktische Features im Syntax-Demo</p>
+        </div>
+        <div class="mini">
+          <h3>1</h3>
+          <p>Ziel: Lernen, lesen, direkt anwenden</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="card" aria-label="Leap Syntax Example">
+      <div class="card-header">
+        <h2>Leap Syntax (Extract)</h2>
+        <span class="source">Source: leap/hello.lp</span>
+      </div>
+      <pre><code>//C#
+//int x1 = 100;
+
+x1 = 100;
+
+//Console.WriteLine(x1);
+print(x1);
+
+let x = 41.5 + 1.2;
+y = 67;
+print("Ergebnis der Rechnung von X + Y: " + (x + y));
+
+// Ausgabe mit deutschem Syntax
+ausgeben("AUSGEBEN des Ergebnis der Rechnung von X + Y: " + (x + y));
+
+// If Englisch
+j = 29;
+if(j == 30){
+    print("j ist 30");
+} else if(j == 41){
+    print("j ist 41");
+} else {
+    print("j ist "+j);
+}
+
+// If Deutsch
+z = 41;
+falls(z == 40){
+    ausgeben("z ist 40");
+} sonst falls(z == 41){
+    ausgeben("z ist 41");
+} sonst {
+    ausgeben("z ist nicht 40");
+}
+
+// For + While + Repeat in mehreren Sprachvarianten
+for(i = 0; i &lt; 5; i = i + 1){
+    print("i ist: " + i);
+}
+
+für(k = 0; k &lt; 20; k = k + 5){
+    ausgeben("k ist: " + k);
+}
+
+während(q &lt; 3){
+    ausgeben("q ist: " + q);
+    q = q + 1;
+}
+
+gjenta (r &lt; 3) {
+    skriv("gjenta r=" + r);
+    r = r + 1;
+}
+
+// Funktionen (EN/DE)
+def greet(name) {
+    return "Hello " + name;
+}
+print(greet("Max"));
+
+funktion begrüß(name) {
+    zurück "Hallo " + name;
+}
+ausgeben(begrüß("Max"));
+
+// Dateifunktionen
+File.Write("output.txt", "Hsaidhasiudhasoj.");
+print(File.exists("beispiel2.txt"));
+Datei.schreibe("beispiel2.txt", "Das ist ein Test.");
+
+// Norwegische Variablen + Bedingungen
+la navn = "Ola";
+la alder = 25;
+aktiv = sann;
+ferdig = usann;
+
+hvis (alder &gt;= 18) {
+    skriv("Voksen");
+} ellers hvis (alder == 17) {
+    skriv("Nesten voksen");
+} ellers {
+    skriv("Mindrearig");
+}
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

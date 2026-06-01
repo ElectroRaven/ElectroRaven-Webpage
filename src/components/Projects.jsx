@@ -29,7 +29,7 @@ const projects = [
         title: "Leap",
         description: "Eine eigens entwickelte, anfängerorientierte Programmiersprache. Mit selbst designtem Syntax und einem eigens entwickelten Interpreter Plugin in VSC.",
         tags: ["Compiler", "Language Design", "Education"],
-        link: "#",
+        link: "/leap/leap.html",
         image: leapImage,
         imageLight: leapImageLight
     }
