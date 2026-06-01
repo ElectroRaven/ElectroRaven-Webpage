@@ -373,7 +373,36 @@ skriv("delOpp: " + ord);</code></pre>
         updateCards();
       });
     });
+    // Normalize indentation inside code blocks to 4-space levels (tabs -> 4 spaces)
+    const normalizeCodeIndentation = () => {
+      document.querySelectorAll('.syntax-code code').forEach((codeEl) => {
+        let raw = codeEl.textContent.replace(/\r/g, '');
+        let lines = raw.split('\n');
+        // strip leading/trailing empty lines
+        while (lines.length && lines[0].trim() === '') lines.shift();
+        while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
+        if (!lines.length) {
+          codeEl.textContent = '';
+          return;
+        }
+        // convert tabs to spaces (4)
+        lines = lines.map(l => l.replace(/\t/g, '    '));
+        // compute leading spaces for non-empty lines
+        const leading = lines.filter(l => l.trim()).map(l => (l.match(/^\s*/)[0] || '').length);
+        const nonZero = leading.filter(n => n > 0);
+        const indentUnit = nonZero.length ? Math.min(...nonZero) : 4;
+        // normalize each line to 4-space multiples
+        const normalized = lines.map(l => {
+          const ls = (l.match(/^\s*/)[0] || '').length;
+          const level = indentUnit ? Math.round(ls / indentUnit) : 0;
+          const newIndent = ' '.repeat(level * 4);
+          return newIndent + l.trimStart();
+        });
+        codeEl.textContent = normalized.join('\n');
+      });
+    };
 
+    normalizeCodeIndentation();
     updateCards();
   </script>
 </body>

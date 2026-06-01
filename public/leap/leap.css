@@ -305,6 +305,12 @@ h1 {
   white-space: pre;
 }
 
+/* Make tabs render consistently */
+.syntax-code code {
+  tab-size: 4;
+  -moz-tab-size: 4;
+}
+
 .syntax-code.is-hidden {
   display: none;
 }
