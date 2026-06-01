@@ -52,6 +52,28 @@
         <span class="source">Source: leap/hello.lp</span>
       </div>
 
+      <div class="control-row" aria-label="Syntax Filter und Sprache">
+        <div class="filter-group" role="tablist" aria-label="Syntax Filter">
+          <button class="control-button is-active" type="button" data-filter-topic="all">Alle Themen</button>
+          <button class="control-button" type="button" data-filter-topic="console">Konsolenausgaben</button>
+          <button class="control-button" type="button" data-filter-topic="vars">Variablen</button>
+          <button class="control-button" type="button" data-filter-topic="math">Operatoren</button>
+          <button class="control-button" type="button" data-filter-topic="conditions">Bedingungen</button>
+          <button class="control-button" type="button" data-filter-topic="loops">Schleifen</button>
+          <button class="control-button" type="button" data-filter-topic="arrays">Arrays</button>
+          <button class="control-button" type="button" data-filter-topic="functions">Funktionen</button>
+          <button class="control-button" type="button" data-filter-topic="files">Datei-IO</button>
+          <button class="control-button" type="button" data-filter-topic="strings">Strings</button>
+        </div>
+
+        <div class="language-group" aria-label="Sprache wechseln">
+          <button class="control-button is-active" type="button" data-language="all">Alle Sprachen</button>
+          <button class="control-button" type="button" data-language="de">Deutsch</button>
+          <button class="control-button" type="button" data-language="en">English</button>
+          <button class="control-button" type="button" data-language="no">Norwegisch</button>
+        </div>
+      </div>
+
       <div class="syntax-nav" aria-label="Syntax Themen">
         <a href="#console">Konsolenausgaben</a>
         <a href="#vars">Variablen</a>
@@ -65,7 +87,7 @@
       </div>
 
       <div class="syntax-grid">
-        <article id="console" class="syntax-card">
+        <article id="console" class="syntax-card" data-topic="console" data-languages="en,de,no">
           <header>
             <h3>Konsolenausgaben</h3>
             <span>EN | DE | NO</span>
@@ -76,7 +98,7 @@ ausgeben("TestMitDeutsch");
 skriv("Navn: " + navn + ", alder: " + alder);</code></pre>
         </article>
 
-        <article id="vars" class="syntax-card">
+        <article id="vars" class="syntax-card" data-topic="vars" data-languages="en,de,no">
           <header>
             <h3>Variablen und Booleans</h3>
             <span>EN | DE | NO</span>
@@ -93,7 +115,7 @@ aktiv = sann;
 ferdig = usann;</code></pre>
         </article>
 
-        <article id="math" class="syntax-card">
+        <article id="math" class="syntax-card" data-topic="math" data-languages="en">
           <header>
             <h3>Mathematische Operatoren</h3>
             <span>Arithmetik</span>
@@ -106,7 +128,7 @@ print("Modulus von y durch 66: " + (y % 66));
 print("Ergebnis X + Y: " + (x + y));</code></pre>
         </article>
 
-        <article id="conditions" class="syntax-card">
+        <article id="conditions" class="syntax-card" data-topic="conditions" data-languages="en,de,no">
           <header>
             <h3>Bedingungen</h3>
             <span>EN | DE | NO</span>
@@ -131,7 +153,7 @@ hvis (alder &gt;= 18) {
 }</code></pre>
         </article>
 
-        <article id="loops" class="syntax-card">
+        <article id="loops" class="syntax-card" data-topic="loops" data-languages="en,de,no">
           <header>
             <h3>Schleifen</h3>
             <span>for | while | repeat</span>
@@ -152,7 +174,7 @@ gjenta (r &lt; 3) {
 }</code></pre>
         </article>
 
-        <article id="arrays" class="syntax-card">
+        <article id="arrays" class="syntax-card" data-topic="arrays" data-languages="en">
           <header>
             <h3>Arrays und Zugriff</h3>
             <span>Indexing</span>
@@ -169,7 +191,7 @@ matrix[0][1] = 42;
 print("First name: " + names[0]);</code></pre>
         </article>
 
-        <article id="functions" class="syntax-card">
+        <article id="functions" class="syntax-card" data-topic="functions" data-languages="en,de,no">
           <header>
             <h3>Funktionen</h3>
             <span>EN | DE | NO</span>
@@ -188,7 +210,7 @@ funksjon sum(a, b) {
 }</code></pre>
         </article>
 
-        <article id="files" class="syntax-card">
+        <article id="files" class="syntax-card" data-topic="files" data-languages="en,de,no">
           <header>
             <h3>Dateioperationen</h3>
             <span>Read | Write | Append</span>
@@ -204,7 +226,7 @@ Datei.schreibe("beispiel2.txt", "Das ist ein Test.");
 Fil.skriv("norsk.txt", "Hei fra Leap");</code></pre>
         </article>
 
-        <article id="strings" class="syntax-card">
+        <article id="strings" class="syntax-card" data-topic="strings" data-languages="en,de,no">
           <header>
             <h3>String-Methoden</h3>
             <span>EN | DE | NO</span>
@@ -224,5 +246,48 @@ skriv("lengde: " + tekst.lengde());</code></pre>
       </div>
     </section>
   </main>
+
+  <script>
+    const topicButtons = document.querySelectorAll('[data-filter-topic]');
+    const languageButtons = document.querySelectorAll('[data-language]');
+    const cards = document.querySelectorAll('.syntax-card');
+
+    let activeTopic = 'all';
+    let activeLanguage = 'all';
+
+    const updateCards = () => {
+      cards.forEach((card) => {
+        const cardTopic = card.dataset.topic;
+        const supportedLanguages = (card.dataset.languages || '').split(',').filter(Boolean);
+        const matchesTopic = activeTopic === 'all' || cardTopic === activeTopic;
+        const matchesLanguage = activeLanguage === 'all' || supportedLanguages.includes(activeLanguage);
+        card.classList.toggle('is-hidden', !(matchesTopic && matchesLanguage));
+      });
+    };
+
+    const setActiveButton = (buttons, key, value) => {
+      buttons.forEach((button) => {
+        button.classList.toggle('is-active', button.dataset[key] === value);
+      });
+    };
+
+    topicButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeTopic = button.dataset.filterTopic;
+        setActiveButton(topicButtons, 'filterTopic', activeTopic);
+        updateCards();
+      });
+    });
+
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeLanguage = button.dataset.language;
+        setActiveButton(languageButtons, 'language', activeLanguage);
+        updateCards();
+      });
+    });
+
+    updateCards();
+  </script>
 </body>
 </html>
