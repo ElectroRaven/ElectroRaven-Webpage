@@ -25,8 +25,8 @@
           Funktionen und Dateioperationen praxisnah gelernt werden.
         </p>
         <p>
-          Das Beispiel unten stammt direkt aus der Leap Testdatei und zeigt, wie Leap mit mehreren
-          Sprachstilen im selben Oekosystem funktioniert.
+          Unten ist die Syntax in einzelne Themen aufgeteilt, damit jede Funktionalitaet von Leap
+          separat und sauber nachvollziehbar bleibt.
         </p>
       </article>
 
@@ -36,63 +36,109 @@
           <p>Programmierbare Sprachmodi: EN, DE, NO</p>
         </div>
         <div class="mini">
-          <h3>15+</h3>
-          <p>Praktische Features im Syntax-Demo</p>
+          <h3>9</h3>
+          <p>Getrennte Syntax-Themen</p>
         </div>
         <div class="mini">
           <h3>1</h3>
-          <p>Ziel: Lernen, lesen, direkt anwenden</p>
+          <p>Quelle: leap/hello.lp</p>
         </div>
       </aside>
     </section>
 
-    <section class="card" aria-label="Leap Syntax Example">
+    <section class="syntax-overview card" aria-label="Leap Syntax Overview">
       <div class="card-header">
-        <h2>Leap Syntax (Extract)</h2>
+        <h2>Leap Syntax nach Themen</h2>
         <span class="source">Source: leap/hello.lp</span>
       </div>
-      <pre><code>//C#
-//int x1 = 100;
 
-x1 = 100;
+      <div class="syntax-nav" aria-label="Syntax Themen">
+        <a href="#console">Konsolenausgaben</a>
+        <a href="#vars">Variablen</a>
+        <a href="#math">Operatoren</a>
+        <a href="#conditions">Bedingungen</a>
+        <a href="#loops">Schleifen</a>
+        <a href="#arrays">Arrays</a>
+        <a href="#functions">Funktionen</a>
+        <a href="#files">Datei-IO</a>
+        <a href="#strings">Strings</a>
+      </div>
 
-//Console.WriteLine(x1);
-print(x1);
+      <div class="syntax-grid">
+        <article id="console" class="syntax-card">
+          <header>
+            <h3>Konsolenausgaben</h3>
+            <span>EN | DE | NO</span>
+          </header>
+          <p>Ausgabe funktioniert mehrsprachig mit eigenen Keywords.</p>
+          <pre><code>print("Test");
+ausgeben("TestMitDeutsch");
+skriv("Navn: " + navn + ", alder: " + alder);</code></pre>
+        </article>
 
-let x = 41.5 + 1.2;
+        <article id="vars" class="syntax-card">
+          <header>
+            <h3>Variablen und Booleans</h3>
+            <span>EN | DE | NO</span>
+          </header>
+          <p>Dynamische Werte mit sprachspezifischen Literalen.</p>
+          <pre><code>let x = 41.5 + 1.2;
 y = 67;
-print("Ergebnis der Rechnung von X + Y: " + (x + y));
 
-// Ausgabe mit deutschem Syntax
-ausgeben("AUSGEBEN des Ergebnis der Rechnung von X + Y: " + (x + y));
+bedingung = true;
+falschBool = falsch;
 
-// If Englisch
-j = 29;
-if(j == 30){
+la navn = "Ola";
+aktiv = sann;
+ferdig = usann;</code></pre>
+        </article>
+
+        <article id="math" class="syntax-card">
+          <header>
+            <h3>Mathematische Operatoren</h3>
+            <span>Arithmetik</span>
+          </header>
+          <p>Direkt im Ausdruck oder in Ausgaben nutzbar.</p>
+          <pre><code>let x = 41.5 + 1.2;
+y = 67;
+
+print("Modulus von y durch 66: " + (y % 66));
+print("Ergebnis X + Y: " + (x + y));</code></pre>
+        </article>
+
+        <article id="conditions" class="syntax-card">
+          <header>
+            <h3>Bedingungen</h3>
+            <span>EN | DE | NO</span>
+          </header>
+          <p>if/falls/hvis mit else-Zweigen in allen Sprachmodi.</p>
+          <pre><code>if(j == 30){
     print("j ist 30");
 } else if(j == 41){
     print("j ist 41");
 } else {
-    print("j ist "+j);
+    print("j ist " + j);
 }
 
-// If Deutsch
-z = 41;
 falls(z == 40){
     ausgeben("z ist 40");
-} sonst falls(z == 41){
-    ausgeben("z ist 41");
 } sonst {
     ausgeben("z ist nicht 40");
 }
 
-// For + While + Repeat in mehreren Sprachvarianten
-for(i = 0; i &lt; 5; i = i + 1){
-    print("i ist: " + i);
-}
+hvis (alder &gt;= 18) {
+    skriv("Voksen");
+}</code></pre>
+        </article>
 
-für(k = 0; k &lt; 20; k = k + 5){
-    ausgeben("k ist: " + k);
+        <article id="loops" class="syntax-card">
+          <header>
+            <h3>Schleifen</h3>
+            <span>for | while | repeat</span>
+          </header>
+          <p>Klassische Kontrollstrukturen mit lokalen Sprachvarianten.</p>
+          <pre><code>for(i = 0; i &lt; 5; i = i + 1){
+    print("i ist: " + i);
 }
 
 während(q &lt; 3){
@@ -103,38 +149,79 @@ während(q &lt; 3){
 gjenta (r &lt; 3) {
     skriv("gjenta r=" + r);
     r = r + 1;
-}
+}</code></pre>
+        </article>
 
-// Funktionen (EN/DE)
-def greet(name) {
+        <article id="arrays" class="syntax-card">
+          <header>
+            <h3>Arrays und Zugriff</h3>
+            <span>Indexing</span>
+          </header>
+          <p>Listen, Matrizen und Updates per Indexnotation.</p>
+          <pre><code>let names = ["Anna", "Ben", "Cara"];
+let matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+matrix[0][1] = 42;
+print("First name: " + names[0]);</code></pre>
+        </article>
+
+        <article id="functions" class="syntax-card">
+          <header>
+            <h3>Funktionen</h3>
+            <span>EN | DE | NO</span>
+          </header>
+          <p>Eigene Funktionen mit return/zurück/retur.</p>
+          <pre><code>def greet(name) {
     return "Hello " + name;
 }
-print(greet("Max"));
 
 funktion begrüß(name) {
     zurück "Hallo " + name;
 }
-ausgeben(begrüß("Max"));
 
-// Dateifunktionen
+funksjon sum(a, b) {
+    retur a + b;
+}</code></pre>
+        </article>
+
+        <article id="files" class="syntax-card">
+          <header>
+            <h3>Dateioperationen</h3>
+            <span>Read | Write | Append</span>
+          </header>
+          <p>Dateien lesen, schreiben, erweitern und Existenz pruefen.</p>
+          <pre><code>fileContent = File.Read("beispiel.txt");
 File.Write("output.txt", "Hsaidhasiudhasoj.");
-print(File.exists("beispiel2.txt"));
+File.Append("beispiel2.txt", "\nNeue Zeile angehängt.");
+
+dateiInhalt = Datei.lies("output.txt");
 Datei.schreibe("beispiel2.txt", "Das ist ein Test.");
 
-// Norwegische Variablen + Bedingungen
-la navn = "Ola";
-la alder = 25;
-aktiv = sann;
-ferdig = usann;
+Fil.skriv("norsk.txt", "Hei fra Leap");</code></pre>
+        </article>
 
-hvis (alder &gt;= 18) {
-    skriv("Voksen");
-} ellers hvis (alder == 17) {
-    skriv("Nesten voksen");
-} ellers {
-    skriv("Mindrearig");
-}
-</code></pre>
+        <article id="strings" class="syntax-card">
+          <header>
+            <h3>String-Methoden</h3>
+            <span>EN | DE | NO</span>
+          </header>
+          <p>Viele eingebaute Methoden fuer Textmanipulation.</p>
+          <pre><code>s = "  Hallo Welt  ";
+print("upper: " + s.upper());
+print("trim: '" + s.trim() + "'");
+
+t = "  Grüß Gott  ";
+ausgeben("länge: " + t.länge());
+ausgeben("ersetze: " + t.ersetze("Gott", "Welt"));
+
+tekst = "  Hei Verden  ";
+skriv("lengde: " + tekst.lengde());</code></pre>
+        </article>
+      </div>
     </section>
   </main>
 </body>
