@@ -397,88 +397,71 @@ skriv("delOpp: " + ord);</code></pre>
         }
         if (header !== null) blocks.push({ header, content: buf.join('\n') });
 
-        const detectLang = (h, content) => {
+        const langFromHeader = (h) => {
           const hh = (h || '').toLowerCase();
-          if (/engl|english|eng/i.test(hh)) return 'en';
-          if (/deut|deutsch|de/i.test(hh)) return 'de';
-          if (/no\b|norw|norsk|norweg/i.test(hh)) return 'no';
-          const c = (content || '').toLowerCase();
-          // stronger content checks
-          if (/\bprint\s*\(|\bdef\b|\bfile\.|\bconsole\b/.test(c)) return 'en';
-          if (/\bausgeben\s*\(|\bfunktion\b|\bzurück\b|\bdatei\.|\bdatei\b/.test(c)) return 'de';
-          if (/\bskriv\s*\(|\bfunksjon\b|\bfil\.|\bgjenta\b|\bmens\b/.test(c)) return 'no';
-          return 'all';
-        };
-
-        const detectTopic = (h, content) => {
-          const hh = (h || '').toLowerCase();
-          const c = (content || '').toLowerCase();
-          if (/\bif\b|\bfalls\b|\bsonst\b|\belse\b/.test(hh) || /\bif\(|\bfalls\(|\bsonst\b/.test(c)) return 'conditions';
-          if (/\bfor\b|\bwhile\b|\brepeat\b|\bwiederhole\b|\bgjenta\b|\bmens\b/.test(hh) || /\bfor\(|\bwhile\(|\brepeat\b/.test(c)) return 'loops';
-          if (/rechn|math|modulus|let x =/.test(hh) || /modulus|let x =/.test(c)) return 'math';
-          if (/ausgabe|print|ausgeben|skriv|ausgeben\(|print\(|skriv\(/.test(hh) || /\bprint\(|\bausgeben\(|\bskriv\(/.test(c)) return 'console';
-          if (/var|boolean|variab|aktiv|falsch|variablen/.test(hh) || /\bname =|\balter =|\baktiv =|\bbedingung =/.test(c)) return 'vars';
-          if (/array|matrix|names|matrix|arrays/.test(hh) || /\bmatrix\b|\bnames\b|\b\[\d|\bmatrix\[/.test(c)) return 'arrays';
-          if (/funk|def |funktion|return|zurück|funktionen/.test(hh) || /\bdef\b|\bfunktion\b|\breturn\b/.test(c)) return 'functions';
-          if (/datei|file|fil|lies|schreibe|append|anhängen/.test(hh) || /\bfile\.|\bdatei\.|\bfil\.|\bDatei\.|\bFile\.|\bFil\./.test(c)) return 'files';
-          if (/string|trim|replace|länge|length|split|teil|substring|stringmethoden/.test(hh) || /\btrim\(|\breplace\(|\blen\(|\blength\(|\bteil\(|\bsubstring\(/.test(c)) return 'strings';
+          if (/engl|english|eng/.test(hh)) return 'en';
+          if (/deut|deutsch|de\b|deutschland|de:/.test(hh)) return 'de';
+          if (/norw|norsk|norweg|no\b/.test(hh)) return 'no';
           return null;
         };
 
-        // assign each parsed block to the matching card/language
+        const topicFromHeader = (h) => {
+          if (!h) return null;
+          const hh = h.toLowerCase();
+          if (/console|ausgabe|print|ausgeben|skriv/.test(hh)) return 'console';
+          if (/variab|boolean|vars|variablen|variables/.test(hh)) return 'vars';
+          if (/rechnung|math|arith|modulus|operatoren/.test(hh)) return 'math';
+          if (/if|falls|beding|condition|bedingungen/.test(hh)) return 'conditions';
+          if (/for|while|repeat|schleif|wiederhole|loops|schleifen/.test(hh)) return 'loops';
+          if (/array|matrix|arrays|indexing/.test(hh)) return 'arrays';
+          if (/funktion|def|funktionen|functions/.test(hh)) return 'functions';
+          if (/datei|file|files|read|write|append/.test(hh)) return 'files';
+          if (/string|trim|replace|länge|length|strings/.test(hh)) return 'strings';
+          return null;
+        };
+
+        // first pass: assign only when header contains both topic and language
         for (const b of blocks) {
-          const cleaned = b.content.split('\n').filter(l => !l.trim().startsWith('//')).join('\n').trim();
-          if (!cleaned) continue;
-          const lang = detectLang(b.header, cleaned);
-          const topic = detectTopic(b.header, cleaned);
-          if (topic) {
-            const card = document.querySelector(`.syntax-card[data-topic="${topic}"]`);
-            if (card) {
-              if (lang === 'all') {
-                // if header said 'all' or unknown, try to detect language per content and place accordingly
-                ['de','en','no'].forEach(l => {
-                  const el = card.querySelector(`.syntax-code[data-lang="${l}"] code`);
-                  if (el) {
-                    // place only if content contains language-specific keywords
-                    const lc = cleaned.toLowerCase();
-                    if ((l === 'de' && /ausgeben|funktion|zurück|datei|ausgeben\(|funktion\b/.test(lc)) ||
-                        (l === 'en' && /print\(|def\b|file\.|print\b/.test(lc)) ||
-                        (l === 'no' && /skriv\(|funksjon|fil\.|skriv\b/.test(lc))) {
-                      el.textContent = cleaned;
-                    }
-                  }
-                });
-              } else {
-                const el = card.querySelector(`.syntax-code[data-lang="${lang}"] code`);
-                if (el) el.textContent = cleaned;
-              }
+          const content = b.content.split('\n').filter(l => !l.trim().startsWith('//')).join('\n').trim();
+          if (!content) continue;
+          const lang = langFromHeader(b.header);
+          const topic = topicFromHeader(b.header);
+          if (!lang || !topic) continue; // require both in header for first pass
+          const card = document.querySelector(`.syntax-card[data-topic="${topic}"]`);
+          if (!card) continue;
+          const el = card.querySelector(`.syntax-code[data-lang="${lang}"] code`);
+          if (el) el.textContent = content;
+        }
+
+        // second pass: for any card+lang still empty, find a paragraph that matches keywords for that pair
+        const paragraphs = raw.replace(/\r/g, '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+        const searchPatterns = {
+          console: { de: /ausgeben\(|dateiInhalt|ausgeben\(/i, en: /print\(|file.read/i, no: /skriv\(/i },
+          vars: { de: /name =|alter =|aktiv =/i, en: /name =|age =|active =/i, no: /navn =|alder =/i },
+          math: { de: /let x =|modulus von/i, en: /let x =|modulus of/i, no: /la x =|modulus av/i },
+          conditions: { de: /falls\(/i, en: /if\(/i, no: /hvis\s*\(/i },
+          loops: { de: /für\(|für\(|wiederhole/i, en: /for\(|while\(|repeat/i, no: /gjenta|mens|for\s*\(/i },
+          arrays: { de: /let names|matrix/i, en: /let names|matrix/i, no: /la farger|la tall/i },
+          functions: { de: /funktion\b|zurück\b/i, en: /def\b|return\b/i, no: /funksjon\b|retur\b/i },
+          files: { de: /datei\.|Datei\.|lies\(|schreibe\(/i, en: /file\.|File\.|Read\(|Write\(/i, no: /fil\.|Fil\.|les\(|skriv\(/i },
+          strings: { de: /t =|ausgeben\(|länge|trimmen/i, en: /s =|print\(|length|trim/i, no: /tekst =|skriv\(|lengde/i }
+        };
+
+        for (const card of cards) {
+          const topic = card.dataset.topic;
+          ['de','en','no'].forEach(lang => {
+            const el = card.querySelector(`.syntax-code[data-lang="${lang}"] code`);
+            if (el && el.textContent.trim()) return; // already filled
+            // search paragraphs for matching pattern
+            const pat = (searchPatterns[topic] && searchPatterns[topic][lang]) || null;
+            if (!pat) return;
+            const found = paragraphs.find(p => pat.test(p));
+            if (found) {
+              // remove comment lines and convert tabs
+              const cleaned = found.split('\n').filter(l => !l.trim().startsWith('//')).map(l => l.replace(/\t/g, '    ')).join('\n').trim();
+              el.textContent = cleaned;
             }
-          } else {
-            // no detected topic: avoid aggressive fallback; try to match by language and a small set of keywords per card
-            const lc = cleaned.toLowerCase();
-            for (const card of cards) {
-              const cardTopic = card.dataset.topic;
-              // only place if content mentions a distinctive keyword for this topic
-              const topicKeywords = {
-                console: ['print(', 'ausgeben(', 'skriv('],
-                vars: ['name =', 'alter =', 'aktiv ='],
-                math: ['let x =', 'modulus'],
-                conditions: ['if(', 'falls(', 'hvis('],
-                loops: ['for(', 'while(', 'repeat', 'für('],
-                arrays: ['matrix', 'names', '[' ],
-                functions: ['def ', 'funktion', 'funksjon'],
-                files: ['file.read', 'datei.lies', 'fil.les', 'file.'],
-                strings: ['trim', 'length', 'länge', 'replace']
-              };
-              const kws = topicKeywords[cardTopic] || [];
-              if (kws.some(k => lc.includes(k))) {
-                // detect target language from content
-                const target = detectLang('', cleaned);
-                const el = card.querySelector(`.syntax-code[data-lang="${target === 'all' ? 'de' : target}"] code`);
-                if (el) el.textContent = cleaned;
-              }
-            }
-          }
+          });
         }
 
       } catch (err) {
