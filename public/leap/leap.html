@@ -373,37 +373,90 @@ skriv("delOpp: " + ord);</code></pre>
         updateCards();
       });
     });
-    // Normalize indentation inside code blocks to 4-space levels (tabs -> 4 spaces)
+    // Load examples from the source file and populate the code blocks.
+    // This preserves the original indentation from `hello.lp` (only tabs -> 4 spaces conversion).
+    const loadExamplesFromSource = async () => {
+      try {
+        const raw = await fetch('./hello.lp').then(r => r.text());
+        const paragraphs = raw.replace(/\r/g, '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+
+        const topicKeywords = {
+          console: [['ausgeben('], ['print('], ['skriv(']],
+          vars: [['name =', 'alter =', 'aktiv ='], ['name =', 'age =', 'active ='], ['navn =', 'alder =', 'aktiv =']],
+          math: [['let x =', 'Modulus von'], ['let x =', 'Modulus of'], ['la x =', 'Modulus av']],
+          conditions: [['falls(', 'sonst'], ['if(', 'else if'], ['hvis ', 'ellers'] ],
+          loops: [['für(', 'wiederhole', 'während'], ['for(', 'while(', 'repeat'], ['gjenta', 'mens', 'for (']],
+          arrays: [['let names', 'matrix'], ['let names', 'matrix'], ['la farger', 'la tall']],
+          functions: [['funktion', 'zurück'], ['def ', 'return'], ['funksjon', 'retur']],
+          files: [['Datei.lies', 'Datei.schreibe', 'Datei.anhängen'], ['File.Read', 'File.Write', 'File.Append'], ['Fil.les', 'Fil.skriv', 'Fil.leggTil']],
+          strings: [['t =', 'ausgeben('], ['s =', 'print('], ['tekst =', 'skriv(']]
+        };
+
+        const findMatch = (keywordsList) => {
+          for (const p of paragraphs) {
+            const pl = p.toLowerCase();
+            let ok = true;
+            for (const kw of keywordsList) {
+              if (!pl.includes(kw.toLowerCase())) { ok = false; break; }
+            }
+            if (ok) return p;
+          }
+          // fallback: return first paragraph containing any of the keywords
+          for (const p of paragraphs) {
+            const pl = p.toLowerCase();
+            for (const kw of keywordsList) if (pl.includes(kw.toLowerCase())) return p;
+          }
+          return null;
+        };
+
+        cards.forEach(card => {
+          const topic = card.dataset.topic;
+          const langs = (card.dataset.languages || '').split(',').filter(Boolean);
+          langs.forEach(lang => {
+            const pre = card.querySelector(`.syntax-code[data-lang="${lang}"] code`);
+            if (!pre) return;
+            const keywordsSets = (topicKeywords[topic] || []);
+            // choose a keywords set per language index if possible
+            let candidate = null;
+            if (keywordsSets.length) {
+              // try to find set that matches this lang (heuristic by position)
+              const idx = {de:0, en:1, no:2}[lang] ?? 0;
+              const set = keywordsSets[idx] || keywordsSets[0];
+              candidate = findMatch(set.map(s => s));
+            }
+            if (!candidate) {
+              // last resort: find paragraph that mentions the topic name
+              candidate = paragraphs.find(p => p.toLowerCase().includes(topic));
+            }
+            if (candidate) {
+              // convert tabs to 4 spaces but keep indentation otherwise
+              const text = candidate.replace(/\t/g, '    ');
+              pre.textContent = text;
+            }
+          });
+        });
+
+      } catch (err) {
+        console.warn('Could not load examples from hello.lp', err);
+      }
+    };
+
+    // Minimal normalization: convert tabs to 4 spaces only (preserve leading spaces)
     const normalizeCodeIndentation = () => {
       document.querySelectorAll('.syntax-code code').forEach((codeEl) => {
-        let raw = codeEl.textContent.replace(/\r/g, '');
-        let lines = raw.split('\n');
-        // strip leading/trailing empty lines
-        while (lines.length && lines[0].trim() === '') lines.shift();
-        while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
-        if (!lines.length) {
-          codeEl.textContent = '';
-          return;
-        }
-        // convert tabs to spaces (4)
-        lines = lines.map(l => l.replace(/\t/g, '    '));
-        // compute leading spaces for non-empty lines
-        const leading = lines.filter(l => l.trim()).map(l => (l.match(/^\s*/)[0] || '').length);
-        const nonZero = leading.filter(n => n > 0);
-        const indentUnit = nonZero.length ? Math.min(...nonZero) : 4;
-        // normalize each line to 4-space multiples
-        const normalized = lines.map(l => {
-          const ls = (l.match(/^\s*/)[0] || '').length;
-          const level = indentUnit ? Math.round(ls / indentUnit) : 0;
-          const newIndent = ' '.repeat(level * 4);
-          return newIndent + l.trimStart();
-        });
-        codeEl.textContent = normalized.join('\n');
+        const raw = codeEl.textContent.replace(/\r/g, '');
+        const lines = raw.split('\n');
+        const converted = lines.map(l => l.replace(/\t/g, '    ')).join('\n');
+        codeEl.textContent = converted;
       });
     };
 
-    normalizeCodeIndentation();
-    updateCards();
+    // Load examples, then normalize and update the UI
+    (async () => {
+      await loadExamplesFromSource();
+      normalizeCodeIndentation();
+      updateCards();
+    })();
   </script>
 </body>
 </html>
