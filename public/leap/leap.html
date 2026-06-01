@@ -374,84 +374,128 @@ skriv("delOpp: " + ord);</code></pre>
       });
     });
     // Load examples from the source file and populate the code blocks.
-    // This preserves the original indentation from `hello.lp` (only tabs -> 4 spaces conversion).
+    // Parse `hello.lp` by comment headers (lines starting with //) and map each block to a topic + language.
     const loadExamplesFromSource = async () => {
       try {
         const raw = await fetch('./hello.lp').then(r => r.text());
-        const paragraphs = raw.replace(/\r/g, '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+        const lines = raw.replace(/\r/g, '').split('\n');
 
-        const topicKeywords = {
-          console: [['ausgeben('], ['print('], ['skriv(']],
-          vars: [['name =', 'alter =', 'aktiv ='], ['name =', 'age =', 'active ='], ['navn =', 'alder =', 'aktiv =']],
-          math: [['let x =', 'Modulus von'], ['let x =', 'Modulus of'], ['la x =', 'Modulus av']],
-          conditions: [['falls(', 'sonst'], ['if(', 'else if'], ['hvis ', 'ellers'] ],
-          loops: [['für(', 'wiederhole', 'während'], ['for(', 'while(', 'repeat'], ['gjenta', 'mens', 'for (']],
-          arrays: [['let names', 'matrix'], ['let names', 'matrix'], ['la farger', 'la tall']],
-          functions: [['funktion', 'zurück'], ['def ', 'return'], ['funksjon', 'retur']],
-          files: [['Datei.lies', 'Datei.schreibe', 'Datei.anhängen'], ['File.Read', 'File.Write', 'File.Append'], ['Fil.les', 'Fil.skriv', 'Fil.leggTil']],
-          strings: [['t =', 'ausgeben('], ['s =', 'print('], ['tekst =', 'skriv(']]
+        // parse blocks where a header is a line starting with //
+        const blocks = [];
+        let header = null;
+        let buf = [];
+        for (const line of lines) {
+          if (line.trim().startsWith('//')) {
+            if (header !== null) {
+              blocks.push({ header, content: buf.join('\n') });
+            }
+            header = line.replace(/^\/\//, '').trim();
+            buf = [];
+          } else {
+            buf.push(line);
+          }
+        }
+        if (header !== null) blocks.push({ header, content: buf.join('\n') });
+
+        const detectLang = (h, content) => {
+          const hh = (h || '').toLowerCase();
+          if (/engl|english|eng/i.test(hh)) return 'en';
+          if (/deut|deutsch|de/i.test(hh)) return 'de';
+          if (/no\b|norw|norsk|norweg/i.test(hh)) return 'no';
+          const c = (content || '').toLowerCase();
+          // stronger content checks
+          if (/\bprint\s*\(|\bdef\b|\bfile\.|\bconsole\b/.test(c)) return 'en';
+          if (/\bausgeben\s*\(|\bfunktion\b|\bzurück\b|\bdatei\.|\bdatei\b/.test(c)) return 'de';
+          if (/\bskriv\s*\(|\bfunksjon\b|\bfil\.|\bgjenta\b|\bmens\b/.test(c)) return 'no';
+          return 'all';
         };
 
-        const findMatch = (keywordsList) => {
-          for (const p of paragraphs) {
-            const pl = p.toLowerCase();
-            let ok = true;
-            for (const kw of keywordsList) {
-              if (!pl.includes(kw.toLowerCase())) { ok = false; break; }
-            }
-            if (ok) return p;
-          }
-          // fallback: return first paragraph containing any of the keywords
-          for (const p of paragraphs) {
-            const pl = p.toLowerCase();
-            for (const kw of keywordsList) if (pl.includes(kw.toLowerCase())) return p;
-          }
+        const detectTopic = (h, content) => {
+          const hh = (h || '').toLowerCase();
+          const c = (content || '').toLowerCase();
+          if (/\bif\b|\bfalls\b|\bsonst\b|\belse\b/.test(hh) || /\bif\(|\bfalls\(|\bsonst\b/.test(c)) return 'conditions';
+          if (/\bfor\b|\bwhile\b|\brepeat\b|\bwiederhole\b|\bgjenta\b|\bmens\b/.test(hh) || /\bfor\(|\bwhile\(|\brepeat\b/.test(c)) return 'loops';
+          if (/rechn|math|modulus|let x =/.test(hh) || /modulus|let x =/.test(c)) return 'math';
+          if (/ausgabe|print|ausgeben|skriv|ausgeben\(|print\(|skriv\(/.test(hh) || /\bprint\(|\bausgeben\(|\bskriv\(/.test(c)) return 'console';
+          if (/var|boolean|variab|aktiv|falsch|variablen/.test(hh) || /\bname =|\balter =|\baktiv =|\bbedingung =/.test(c)) return 'vars';
+          if (/array|matrix|names|matrix|arrays/.test(hh) || /\bmatrix\b|\bnames\b|\b\[\d|\bmatrix\[/.test(c)) return 'arrays';
+          if (/funk|def |funktion|return|zurück|funktionen/.test(hh) || /\bdef\b|\bfunktion\b|\breturn\b/.test(c)) return 'functions';
+          if (/datei|file|fil|lies|schreibe|append|anhängen/.test(hh) || /\bfile\.|\bdatei\.|\bfil\.|\bDatei\.|\bFile\.|\bFil\./.test(c)) return 'files';
+          if (/string|trim|replace|länge|length|split|teil|substring|stringmethoden/.test(hh) || /\btrim\(|\breplace\(|\blen\(|\blength\(|\bteil\(|\bsubstring\(/.test(c)) return 'strings';
           return null;
         };
 
-        cards.forEach(card => {
-          const topic = card.dataset.topic;
-          const langs = (card.dataset.languages || '').split(',').filter(Boolean);
-          langs.forEach(lang => {
-            const pre = card.querySelector(`.syntax-code[data-lang="${lang}"] code`);
-            if (!pre) return;
-            const keywordsSets = (topicKeywords[topic] || []);
-            // choose a keywords set per language index if possible
-            let candidate = null;
-            if (keywordsSets.length) {
-              // try to find set that matches this lang (heuristic by position)
-              const idx = {de:0, en:1, no:2}[lang] ?? 0;
-              const set = keywordsSets[idx] || keywordsSets[0];
-              candidate = findMatch(set.map(s => s));
+        // assign each parsed block to the matching card/language
+        for (const b of blocks) {
+          const cleaned = b.content.split('\n').filter(l => !l.trim().startsWith('//')).join('\n').trim();
+          if (!cleaned) continue;
+          const lang = detectLang(b.header, cleaned);
+          const topic = detectTopic(b.header, cleaned);
+          if (topic) {
+            const card = document.querySelector(`.syntax-card[data-topic="${topic}"]`);
+            if (card) {
+              if (lang === 'all') {
+                // if header said 'all' or unknown, try to detect language per content and place accordingly
+                ['de','en','no'].forEach(l => {
+                  const el = card.querySelector(`.syntax-code[data-lang="${l}"] code`);
+                  if (el) {
+                    // place only if content contains language-specific keywords
+                    const lc = cleaned.toLowerCase();
+                    if ((l === 'de' && /ausgeben|funktion|zurück|datei|ausgeben\(|funktion\b/.test(lc)) ||
+                        (l === 'en' && /print\(|def\b|file\.|print\b/.test(lc)) ||
+                        (l === 'no' && /skriv\(|funksjon|fil\.|skriv\b/.test(lc))) {
+                      el.textContent = cleaned;
+                    }
+                  }
+                });
+              } else {
+                const el = card.querySelector(`.syntax-code[data-lang="${lang}"] code`);
+                if (el) el.textContent = cleaned;
+              }
             }
-            if (!candidate) {
-              // last resort: find paragraph that mentions the topic name
-              candidate = paragraphs.find(p => p.toLowerCase().includes(topic));
+          } else {
+            // no detected topic: avoid aggressive fallback; try to match by language and a small set of keywords per card
+            const lc = cleaned.toLowerCase();
+            for (const card of cards) {
+              const cardTopic = card.dataset.topic;
+              // only place if content mentions a distinctive keyword for this topic
+              const topicKeywords = {
+                console: ['print(', 'ausgeben(', 'skriv('],
+                vars: ['name =', 'alter =', 'aktiv ='],
+                math: ['let x =', 'modulus'],
+                conditions: ['if(', 'falls(', 'hvis('],
+                loops: ['for(', 'while(', 'repeat', 'für('],
+                arrays: ['matrix', 'names', '[' ],
+                functions: ['def ', 'funktion', 'funksjon'],
+                files: ['file.read', 'datei.lies', 'fil.les', 'file.'],
+                strings: ['trim', 'length', 'länge', 'replace']
+              };
+              const kws = topicKeywords[cardTopic] || [];
+              if (kws.some(k => lc.includes(k))) {
+                // detect target language from content
+                const target = detectLang('', cleaned);
+                const el = card.querySelector(`.syntax-code[data-lang="${target === 'all' ? 'de' : target}"] code`);
+                if (el) el.textContent = cleaned;
+              }
             }
-            if (candidate) {
-              // convert tabs to 4 spaces but keep indentation otherwise
-              const text = candidate.replace(/\t/g, '    ');
-              pre.textContent = text;
-            }
-          });
-        });
+          }
+        }
 
       } catch (err) {
         console.warn('Could not load examples from hello.lp', err);
       }
     };
 
-    // Minimal normalization: convert tabs to 4 spaces only (preserve leading spaces)
+    // Minimal normalization: convert tabs to 4 spaces only (preserve leading spaces), remove any inline comment lines
     const normalizeCodeIndentation = () => {
       document.querySelectorAll('.syntax-code code').forEach((codeEl) => {
         const raw = codeEl.textContent.replace(/\r/g, '');
-        const lines = raw.split('\n');
+        const lines = raw.split('\n').filter(l => !l.trim().startsWith('//'));
         const converted = lines.map(l => l.replace(/\t/g, '    ')).join('\n');
-        codeEl.textContent = converted;
+        codeEl.textContent = converted.trim();
       });
     };
 
-    // Load examples, then normalize and update the UI
     (async () => {
       await loadExamplesFromSource();
       normalizeCodeIndentation();
