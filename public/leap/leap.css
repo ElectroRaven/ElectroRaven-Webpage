@@ -50,8 +50,8 @@ main {
 
 .hero {
   display: grid;
-  grid-template-columns: 1fr minmax(280px, 420px);
-  gap: 22px;
+  grid-template-columns: 1fr;
+  gap: 16px;
   align-items: start;
   margin-bottom: 30px;
 }
@@ -72,6 +72,10 @@ main {
 .hero-panel {
   padding: 30px;
   animation-delay: 80ms;
+}
+
+.hero-panel:first-child {
+  max-width: 760px;
 }
 
 .badge {
@@ -111,13 +115,13 @@ h1 {
 .mini-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 12px 14px;
+  gap: 12px;
+  padding: 16px;
   animation-delay: 170ms;
-  align-content: center;
+  align-content: stretch;
   align-items: start;
-  margin: 22px auto 0;
-  max-width: 360px;
+  width: min(100%, 760px);
+  margin: 0;
 }
 
 .mini {
@@ -299,10 +303,6 @@ h1 {
 }
 
 @media (max-width: 920px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
   .mini-stats {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
