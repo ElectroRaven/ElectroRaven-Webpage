@@ -81,9 +81,9 @@
             <span>EN | DE | NO</span>
           </header>
           <p>Ausgabe funktioniert mehrsprachig mit eigenen Keywords.</p>
-          <pre class="syntax-code" data-lang="de"><code>ausgeben("TestMitDeutsch");</code></pre>
-          <pre class="syntax-code" data-lang="en"><code>print("Test");</code></pre>
-          <pre class="syntax-code" data-lang="no"><code>skriv("Navn: " + navn + ", alder: " + alder);</code></pre>
+          <pre class="syntax-code" data-lang="de"><code>ausgeben("Hallo Leap");</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>print("Hello Leap");</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>skriv("Hei Leap");</code></pre>
         </article>
 
         <article id="vars" class="syntax-card" data-topic="vars" data-languages="en,de,no">
@@ -92,17 +92,16 @@
             <span>EN | DE | NO</span>
           </header>
           <p>Dynamische Werte mit sprachspezifischen Literalen.</p>
-          <pre class="syntax-code" data-lang="de"><code>let x = 41.5 + 1.2;
-y = 67;
-
-bedingung = true;
-falschBool = falsch;</code></pre>
-          <pre class="syntax-code" data-lang="en"><code>let x = 41.5 + 1.2;
-y = 67;
-
-condition = true;
-falseFlag = false;</code></pre>
-          <pre class="syntax-code" data-lang="no"><code>la navn = "Ola";
+          <pre class="syntax-code" data-lang="de"><code>name = "Mia";
+alter = 21;
+aktiv = true;
+fertig = falsch;</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>name = "Mia";
+age = 21;
+active = true;
+done = false;</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>navn = "Mia";
+alder = 21;
 aktiv = sann;
 ferdig = usann;</code></pre>
         </article>
@@ -116,8 +115,8 @@ ferdig = usann;</code></pre>
           <pre class="syntax-code" data-lang="de"><code>let x = 41.5 + 1.2;
 y = 67;
 
-print("Modulus von y durch 66: " + (y % 66));
-print("Ergebnis X + Y: " + (x + y));</code></pre>
+ausgeben("Modulus von y durch 66: " + (y % 66));
+ausgeben("Ergebnis X + Y: " + (x + y));</code></pre>
           <pre class="syntax-code" data-lang="en"><code>let x = 41.5 + 1.2;
 y = 67;
 
@@ -136,21 +135,24 @@ skriv("Resultat X + Y: " + (x + y));</code></pre>
             <span>EN | DE | NO</span>
           </header>
           <p>if/falls/hvis mit else-Zweigen in allen Sprachmodi.</p>
-          <pre class="syntax-code" data-lang="de"><code>falls(z == 40){
+            <pre class="syntax-code" data-lang="de"><code>z = 41;
+      falls(z == 40){
     ausgeben("z ist 40");
 } sonst falls(z == 41){
     ausgeben("z ist 41");
 } sonst {
     ausgeben("z ist nicht 40");
 }</code></pre>
-          <pre class="syntax-code" data-lang="en"><code>if(j == 30){
+            <pre class="syntax-code" data-lang="en"><code>j = 30;
+      if(j == 30){
     print("j is 30");
 } else if(j == 41){
     print("j is 41");
 } else {
     print("j is " + j);
 }</code></pre>
-          <pre class="syntax-code" data-lang="no"><code>hvis (alder &gt;= 18) {
+            <pre class="syntax-code" data-lang="no"><code>alder = 18;
+      hvis (alder &gt;= 18) {
     skriv("Voksen");
 } ellers hvis (alder == 17) {
     skriv("Nesten voksen");
@@ -165,17 +167,27 @@ skriv("Resultat X + Y: " + (x + y));</code></pre>
             <span>for | while | repeat</span>
           </header>
           <p>Klassische Kontrollstrukturen mit lokalen Sprachvarianten.</p>
-          <pre class="syntax-code" data-lang="de"><code>für(k = 0; k &lt; 20; k = k + 5){
+            <pre class="syntax-code" data-lang="de"><code>für(k = 0; k &lt; 5; k = k + 1){
     ausgeben("k ist: " + k);
 }
 
 während(q &lt; 3){
     ausgeben("q ist: " + q);
     q = q + 1;
+      }
+
+      wiederhole (m &lt; 5) {
+        ausgeben("m ist: " + m);
+        m = m + 1;
 }</code></pre>
           <pre class="syntax-code" data-lang="en"><code>for(i = 0; i &lt; 5; i = i + 1){
     print("i is: " + i);
 }
+
+      while(p &lt; 3){
+        print("p is: " + p);
+        p = p + 1;
+      }
 
 repeat (b &lt; 5) {
     print("b is: " + b);
@@ -198,9 +210,16 @@ mens (teller &lt; 3) {
             <span>Indexing</span>
           </header>
           <p>Listen, Matrizen und Updates per Indexnotation.</p>
-          <pre class="syntax-code" data-lang="de"><code>let names = ["Anna", "Ben", "Cara"];
-print("Erster Name: " + names[0]);
-matrix[0][1] = 42;</code></pre>
+            <pre class="syntax-code" data-lang="de"><code>let names = ["Anna", "Ben", "Cara"];
+      let matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+      ];
+
+      print("Erster Name: " + names[0]);
+      matrix[0][1] = 42;
+      print("Matrixzeile 0: " + matrix[0]);</code></pre>
           <pre class="syntax-code" data-lang="en"><code>let names = ["Anna", "Ben", "Cara"];
 let matrix = [
     [1, 2, 3],
@@ -209,10 +228,13 @@ let matrix = [
 ];
 
 matrix[0][1] = 42;
-print("First name: " + names[0]);</code></pre>
+print("First name: " + names[0]);
+print("Matrix row 0: " + matrix[0]);</code></pre>
           <pre class="syntax-code" data-lang="no"><code>la farger = ["rod", "gronn", "bla"];
 la tall = [10, 20, 30];
-skriv("Farge 0: " + farger[0]);</code></pre>
+skriv("Farge 0: " + farger[0]);
+tall[2] = 99;
+skriv("Tall nach Update: " + tall);</code></pre>
         </article>
 
         <article id="functions" class="syntax-card" data-topic="functions" data-languages="en,de,no">
@@ -221,27 +243,36 @@ skriv("Farge 0: " + farger[0]);</code></pre>
             <span>EN | DE | NO</span>
           </header>
           <p>Eigene Funktionen mit return/zurück/retur.</p>
-          <pre class="syntax-code" data-lang="de"><code>funktion begrüß(name) {
-    zurück "Hallo " + name;
-}
+            <pre class="syntax-code" data-lang="de"><code>funktion begruess(name) {
+        zurück "Hallo " + name;
+      }
 
-funktion addiere(a, b) {
-    zurück a + b;
-}</code></pre>
-          <pre class="syntax-code" data-lang="en"><code>def greet(name) {
-    return "Hello " + name;
-}
+      funktion addiere(a, b) {
+        zurück a + b;
+      }
 
-def add(a, b) {
-    return a + b;
-}</code></pre>
-          <pre class="syntax-code" data-lang="no"><code>funksjon hils(person) {
-    retur "Hei " + person;
-}
+      ausgeben(begruess("Max"));
+      ausgeben(addiere(5, 7));</code></pre>
+            <pre class="syntax-code" data-lang="en"><code>def greet(name) {
+        return "Hello " + name;
+      }
 
-funksjon sum(a, b) {
-    retur a + b;
-}</code></pre>
+      def add(a, b) {
+        return a + b;
+      }
+
+      print(greet("Max"));
+      print(add(2, 3));</code></pre>
+            <pre class="syntax-code" data-lang="no"><code>funksjon hils(person) {
+        retur "Hei " + person;
+      }
+
+      funksjon sum(a, b) {
+        retur a + b;
+      }
+
+      skriv(hils("Norge"));
+      skriv("sum: " + sum(4, 6));</code></pre>
         </article>
 
         <article id="files" class="syntax-card" data-topic="files" data-languages="en,de,no">
@@ -252,13 +283,16 @@ funksjon sum(a, b) {
           <p>Dateien lesen, schreiben, erweitern und Existenz pruefen.</p>
           <pre class="syntax-code" data-lang="de"><code>dateiInhalt = Datei.lies("output.txt");
 Datei.schreibe("beispiel2.txt", "Das ist ein Test.");
-Datei.anhängen("beispiel2.txt", "\tNoch eine angehängte Zeile.");</code></pre>
-          <pre class="syntax-code" data-lang="en"><code>fileContent = File.Read("beispiel.txt");
-File.Write("output.txt", "Hsaidhasiudhasoj.");
-File.Append("beispiel2.txt", "\nNew line appended.");</code></pre>
+Datei.anhängen("beispiel2.txt", "\tNoch eine angehängte Zeile.");
+print(Datei.existiert("beispiel2.txt"));</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>fileContent = File.Read("example.txt");
+File.Write("output.txt", "This is a test.");
+File.Append("output.txt", "\nNew line appended.");
+print(File.exists("output.txt"));</code></pre>
           <pre class="syntax-code" data-lang="no"><code>filInnhold = Fil.les("norsk.txt");
 Fil.skriv("norsk.txt", "Hei fra Leap");
-Fil.leggTil("norsk.txt", "\nNy linje");</code></pre>
+Fil.leggTil("norsk.txt", "\nNy linje");
+skriv("Fil eksisterer: " + Fil.eksisterer("norsk.txt"));</code></pre>
         </article>
 
         <article id="strings" class="syntax-card" data-topic="strings" data-languages="en,de,no">
@@ -269,13 +303,27 @@ Fil.leggTil("norsk.txt", "\nNy linje");</code></pre>
           <p>Viele eingebaute Methoden fuer Textmanipulation.</p>
           <pre class="syntax-code" data-lang="de"><code>t = "  Grüß Gott  ";
 ausgeben("länge: " + t.länge());
+ausgeben("gross: " + t.groß());
+ausgeben("klein: " + t.klein());
+ausgeben("trimmen: '" + t.trimmen() + "'");
+ausgeben("enthält 'Gott': " + t.enthält("Gott"));
 ausgeben("ersetze: " + t.ersetze("Gott", "Welt"));</code></pre>
           <pre class="syntax-code" data-lang="en"><code>s = "  Hallo Welt  ";
+print("length: " + s.length());
 print("upper: " + s.upper());
-print("trim: '" + s.trim() + "'");</code></pre>
+print("lower: " + s.lower());
+print("trim: '" + s.trim() + "'");
+print("contains 'Welt': " + s.contains("Welt"));
+print("replace: " + s.replace("Welt", "Universe"));</code></pre>
           <pre class="syntax-code" data-lang="no"><code>tekst = "  Hei Verden  ";
 skriv("lengde: " + tekst.lengde());
-skriv("erstatt: " + tekst.erstatt("Verden", "Leap"));</code></pre>
+skriv("stor: " + tekst.stor());
+skriv("liten: " + tekst.liten());
+skriv("trimm: '" + tekst.trimm() + "'");
+skriv("inneholder 'Ver': " + tekst.inneholder("Ver"));
+skriv("erstatt: " + tekst.erstatt("Verden", "Leap"));
+ord = tekst.delOpp(" ");
+skriv("delOpp: " + ord);</code></pre>
         </article>
       </div>
     </section>
