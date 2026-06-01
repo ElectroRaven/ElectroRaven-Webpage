@@ -53,6 +53,7 @@ main {
   grid-template-columns: 1fr;
   gap: 16px;
   align-items: start;
+  justify-items: center;
   margin-bottom: 30px;
 }
 
@@ -76,6 +77,11 @@ main {
 
 .hero-panel:first-child {
   max-width: 760px;
+}
+
+.hero-panel:first-child,
+.mini-stats {
+  width: min(100%, 760px);
 }
 
 .badge {
@@ -120,7 +126,6 @@ h1 {
   animation-delay: 170ms;
   align-content: stretch;
   align-items: start;
-  width: min(100%, 760px);
   margin: 0;
 }
 
