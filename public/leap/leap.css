@@ -51,18 +51,18 @@ main {
 .hero {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 28px;
+  gap: 22px;
   align-items: stretch;
   margin-bottom: 30px;
 }
 
 .hero-panel,
 .card {
-  background: var(--panel);
+  background: rgba(9, 24, 30, 0.78);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  box-shadow: var(--shadow);
+  border: 1px solid rgba(182, 237, 224, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
   overflow: hidden;
   transform: translateY(14px);
   opacity: 0;
@@ -70,7 +70,7 @@ main {
 }
 
 .hero-panel {
-  padding: 34px;
+  padding: 30px;
   animation-delay: 80ms;
 }
 
@@ -81,9 +81,9 @@ main {
   font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #d7fff4;
-  background: rgba(82, 224, 191, 0.16);
-  border: 1px solid rgba(82, 224, 191, 0.4);
+  color: #ddfff7;
+  background: rgba(82, 224, 191, 0.12);
+  border: 1px solid rgba(82, 224, 191, 0.28);
   padding: 8px 14px;
   border-radius: 999px;
   margin-bottom: 16px;
@@ -100,7 +100,7 @@ h1 {
   margin: 18px 0 0;
   color: var(--muted);
   line-height: 1.74;
-  max-width: 62ch;
+  max-width: 60ch;
 }
 
 .highlight {
@@ -111,18 +111,18 @@ h1 {
 .mini-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding: 22px;
+  gap: 10px;
+  padding: 18px;
   animation-delay: 170ms;
   align-content: start;
   align-items: start;
 }
 
 .mini {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(182, 237, 224, 0.12);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.025);
   align-self: start;
 }
 
@@ -149,9 +149,9 @@ h1 {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 18px 22px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(182, 237, 224, 0.12);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .card-header h2 {
@@ -174,22 +174,22 @@ h1 {
 .control-row {
   display: grid;
   gap: 12px;
-  padding: 16px 22px 8px;
+  padding: 16px 20px 8px;
 }
 
 .filter-group,
 .language-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .control-button {
   appearance: none;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(182, 237, 224, 0.12);
   border-radius: 999px;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.02);
+  padding: 7px 11px;
+  background: rgba(255, 255, 255, 0.015);
   color: var(--text);
   font: inherit;
   font-size: 0.85rem;
@@ -200,46 +200,21 @@ h1 {
 
 .control-button:hover {
   transform: translateY(-1px);
-  border-color: rgba(82, 224, 191, 0.5);
-  background: rgba(82, 224, 191, 0.09);
+  border-color: rgba(82, 224, 191, 0.36);
+  background: rgba(82, 224, 191, 0.06);
 }
 
 .control-button.is-active {
-  border-color: rgba(82, 224, 191, 0.7);
-  background: rgba(82, 224, 191, 0.18);
+  border-color: rgba(82, 224, 191, 0.52);
+  background: rgba(82, 224, 191, 0.12);
   color: #effff9;
-}
-
-.syntax-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 8px 22px 8px;
-}
-
-.syntax-nav a {
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.86rem;
-  font-weight: 600;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 7px 11px;
-  background: rgba(255, 255, 255, 0.02);
-  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
-}
-
-.syntax-nav a:hover {
-  transform: translateY(-1px);
-  border-color: rgba(82, 224, 191, 0.55);
-  background: rgba(82, 224, 191, 0.1);
 }
 
 .syntax-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  padding: 16px 22px 24px;
+  gap: 14px;
+  padding: 14px 20px 22px;
 }
 
 .syntax-card.is-hidden {
@@ -247,11 +222,11 @@ h1 {
 }
 
 .syntax-card {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(182, 237, 224, 0.12);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.02);
   overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .syntax-card header {
@@ -259,7 +234,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 14px 14px 10px;
+  padding: 13px 13px 9px;
 }
 
 .syntax-card h3 {
@@ -280,7 +255,7 @@ h1 {
 
 .syntax-card p {
   margin: 0;
-  padding: 0 14px 12px;
+  padding: 0 13px 11px;
   font-size: 0.9rem;
   color: var(--muted);
   line-height: 1.56;
@@ -288,20 +263,16 @@ h1 {
 
 .syntax-card pre {
   margin: 0;
-  padding: 14px;
-  border-top: 1px solid var(--code-line);
-  font-size: 0.82rem;
+  padding: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.8rem;
   line-height: 1.6;
   max-height: 300px;
   overflow: auto;
   font-family: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
   color: #d8f6f0;
-  background: linear-gradient(180deg, rgba(10, 23, 29, 0.92), rgba(7, 17, 22, 0.98));
-  scrollbar-color: rgba(82, 224, 191, 0.5) rgba(255, 255, 255, 0.07);
-}
-
-.syntax-card:nth-child(2n) {
-  background: rgba(255, 255, 255, 0.035);
+  background: linear-gradient(180deg, rgba(10, 23, 29, 0.88), rgba(7, 17, 22, 0.96));
+  scrollbar-color: rgba(82, 224, 191, 0.45) rgba(255, 255, 255, 0.06);
 }
 
 @keyframes slideIn {
@@ -339,18 +310,8 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .syntax-nav {
-    padding: 14px 14px 6px;
-    gap: 8px;
-  }
-
   .control-row {
     padding: 12px 14px 4px;
-  }
-
-  .syntax-nav a {
-    font-size: 0.8rem;
-    padding: 6px 10px;
   }
 
   .control-button {
