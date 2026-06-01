@@ -289,8 +289,6 @@ skriv("erstatt: " + tekst.erstatt("Verden", "Leap"));</code></pre>
     let activeTopic = 'all';
     let activeLanguage = 'all';
 
-    const getDisplayedLanguage = () => (activeLanguage === 'all' ? 'de' : activeLanguage);
-
     const setActiveButton = (buttons, key, value) => {
       buttons.forEach((button) => {
         button.classList.toggle('is-active', button.dataset[key] === value);
@@ -298,8 +296,6 @@ skriv("erstatt: " + tekst.erstatt("Verden", "Leap"));</code></pre>
     };
 
     const updateCards = () => {
-      const displayedLanguage = getDisplayedLanguage();
-
       cards.forEach((card) => {
         const cardTopic = card.dataset.topic;
         const supportedLanguages = (card.dataset.languages || '').split(',').filter(Boolean);
@@ -308,7 +304,7 @@ skriv("erstatt: " + tekst.erstatt("Verden", "Leap"));</code></pre>
         card.classList.toggle('is-hidden', !(matchesTopic && matchesLanguage));
 
         card.querySelectorAll('.syntax-code').forEach((block) => {
-          const shouldShow = matchesTopic && matchesLanguage && block.dataset.lang === displayedLanguage;
+          const shouldShow = matchesTopic && matchesLanguage && (activeLanguage === 'all' || block.dataset.lang === activeLanguage);
           block.classList.toggle('is-hidden', !shouldShow);
         });
       });
