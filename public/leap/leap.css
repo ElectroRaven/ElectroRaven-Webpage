@@ -226,6 +226,7 @@ h1 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   padding: 14px 20px 22px;
+  align-items: start;
 }
 
 .syntax-card.is-hidden {
@@ -234,10 +235,11 @@ h1 {
 
 .syntax-card {
   border: 1px solid rgba(182, 237, 224, 0.12);
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.02);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
   overflow: hidden;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  align-self: start;
 }
 
 .syntax-card header {
@@ -245,7 +247,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 13px 13px 9px;
+  padding: 14px 14px 10px;
 }
 
 .syntax-card h3 {
@@ -266,7 +268,7 @@ h1 {
 
 .syntax-card p {
   margin: 0;
-  padding: 0 13px 11px;
+  padding: 0 14px 12px;
   font-size: 0.9rem;
   color: var(--muted);
   line-height: 1.56;
@@ -275,15 +277,15 @@ h1 {
 .syntax-code {
   display: none;
   margin: 0;
-  padding: 13px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  font-size: 0.8rem;
-  line-height: 1.6;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.78rem;
+  line-height: 1.55;
   max-height: 300px;
   overflow: auto;
   font-family: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
   color: #d8f6f0;
-  background: linear-gradient(180deg, rgba(10, 23, 29, 0.88), rgba(7, 17, 22, 0.96));
+  background: linear-gradient(180deg, rgba(10, 23, 29, 0.82), rgba(7, 17, 22, 0.94));
   scrollbar-color: rgba(82, 224, 191, 0.45) rgba(255, 255, 255, 0.06);
 }
 
