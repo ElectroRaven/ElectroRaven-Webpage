@@ -261,7 +261,8 @@ h1 {
   line-height: 1.56;
 }
 
-.syntax-card pre {
+.syntax-code {
+  display: none;
   margin: 0;
   padding: 13px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -273,6 +274,19 @@ h1 {
   color: #d8f6f0;
   background: linear-gradient(180deg, rgba(10, 23, 29, 0.88), rgba(7, 17, 22, 0.96));
   scrollbar-color: rgba(82, 224, 191, 0.45) rgba(255, 255, 255, 0.06);
+}
+
+.syntax-code:not(.is-hidden) {
+  display: block;
+}
+
+.syntax-code code {
+  display: block;
+  white-space: pre;
+}
+
+.syntax-code.is-hidden {
+  display: none;
 }
 
 @keyframes slideIn {
@@ -324,7 +338,7 @@ h1 {
     gap: 12px;
   }
 
-  .syntax-card pre {
+  .syntax-code {
     font-size: 0.78rem;
   }
 }

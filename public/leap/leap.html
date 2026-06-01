@@ -81,9 +81,9 @@
             <span>EN | DE | NO</span>
           </header>
           <p>Ausgabe funktioniert mehrsprachig mit eigenen Keywords.</p>
-          <pre><code>print("Test");
-ausgeben("TestMitDeutsch");
-skriv("Navn: " + navn + ", alder: " + alder);</code></pre>
+          <pre class="syntax-code" data-lang="de"><code>ausgeben("TestMitDeutsch");</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>print("Test");</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>skriv("Navn: " + navn + ", alder: " + alder);</code></pre>
         </article>
 
         <article id="vars" class="syntax-card" data-topic="vars" data-languages="en,de,no">
@@ -92,28 +92,42 @@ skriv("Navn: " + navn + ", alder: " + alder);</code></pre>
             <span>EN | DE | NO</span>
           </header>
           <p>Dynamische Werte mit sprachspezifischen Literalen.</p>
-          <pre><code>let x = 41.5 + 1.2;
+          <pre class="syntax-code" data-lang="de"><code>let x = 41.5 + 1.2;
 y = 67;
 
 bedingung = true;
-falschBool = falsch;
+falschBool = falsch;</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>let x = 41.5 + 1.2;
+y = 67;
 
-la navn = "Ola";
+condition = true;
+falseFlag = false;</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>la navn = "Ola";
 aktiv = sann;
 ferdig = usann;</code></pre>
         </article>
 
-        <article id="math" class="syntax-card" data-topic="math" data-languages="en">
+        <article id="math" class="syntax-card" data-topic="math" data-languages="en,de,no">
           <header>
             <h3>Mathematische Operatoren</h3>
             <span>Arithmetik</span>
           </header>
           <p>Direkt im Ausdruck oder in Ausgaben nutzbar.</p>
-          <pre><code>let x = 41.5 + 1.2;
+          <pre class="syntax-code" data-lang="de"><code>let x = 41.5 + 1.2;
 y = 67;
 
 print("Modulus von y durch 66: " + (y % 66));
 print("Ergebnis X + Y: " + (x + y));</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>let x = 41.5 + 1.2;
+y = 67;
+
+print("Modulus of y by 66: " + (y % 66));
+print("Result X + Y: " + (x + y));</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>la x = 41.5 + 1.2;
+y = 67;
+
+skriv("Modulus av y med 66: " + (y % 66));
+skriv("Resultat X + Y: " + (x + y));</code></pre>
         </article>
 
         <article id="conditions" class="syntax-card" data-topic="conditions" data-languages="en,de,no">
@@ -122,22 +136,26 @@ print("Ergebnis X + Y: " + (x + y));</code></pre>
             <span>EN | DE | NO</span>
           </header>
           <p>if/falls/hvis mit else-Zweigen in allen Sprachmodi.</p>
-          <pre><code>if(j == 30){
-    print("j ist 30");
-} else if(j == 41){
-    print("j ist 41");
-} else {
-    print("j ist " + j);
-}
-
-falls(z == 40){
+          <pre class="syntax-code" data-lang="de"><code>falls(z == 40){
     ausgeben("z ist 40");
+} sonst falls(z == 41){
+    ausgeben("z ist 41");
 } sonst {
     ausgeben("z ist nicht 40");
-}
-
-hvis (alder &gt;= 18) {
+}</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>if(j == 30){
+    print("j is 30");
+} else if(j == 41){
+    print("j is 41");
+} else {
+    print("j is " + j);
+}</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>hvis (alder &gt;= 18) {
     skriv("Voksen");
+} ellers hvis (alder == 17) {
+    skriv("Nesten voksen");
+} ellers {
+    skriv("Mindrearig");
 }</code></pre>
         </article>
 
@@ -147,28 +165,43 @@ hvis (alder &gt;= 18) {
             <span>for | while | repeat</span>
           </header>
           <p>Klassische Kontrollstrukturen mit lokalen Sprachvarianten.</p>
-          <pre><code>for(i = 0; i &lt; 5; i = i + 1){
-    print("i ist: " + i);
+          <pre class="syntax-code" data-lang="de"><code>für(k = 0; k &lt; 20; k = k + 5){
+    ausgeben("k ist: " + k);
 }
 
 während(q &lt; 3){
     ausgeben("q ist: " + q);
     q = q + 1;
+}</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>for(i = 0; i &lt; 5; i = i + 1){
+    print("i is: " + i);
 }
 
-gjenta (r &lt; 3) {
+repeat (b &lt; 5) {
+    print("b is: " + b);
+    b = b + 1;
+}</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>gjenta (r &lt; 3) {
     skriv("gjenta r=" + r);
     r = r + 1;
+}
+
+mens (teller &lt; 3) {
+    skriv("mens teller=" + teller);
+    teller = teller + 1;
 }</code></pre>
         </article>
 
-        <article id="arrays" class="syntax-card" data-topic="arrays" data-languages="en">
+        <article id="arrays" class="syntax-card" data-topic="arrays" data-languages="en,de,no">
           <header>
             <h3>Arrays und Zugriff</h3>
             <span>Indexing</span>
           </header>
           <p>Listen, Matrizen und Updates per Indexnotation.</p>
-          <pre><code>let names = ["Anna", "Ben", "Cara"];
+          <pre class="syntax-code" data-lang="de"><code>let names = ["Anna", "Ben", "Cara"];
+print("Erster Name: " + names[0]);
+matrix[0][1] = 42;</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>let names = ["Anna", "Ben", "Cara"];
 let matrix = [
     [1, 2, 3],
     [4, 5, 6],
@@ -177,6 +210,9 @@ let matrix = [
 
 matrix[0][1] = 42;
 print("First name: " + names[0]);</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>la farger = ["rod", "gronn", "bla"];
+la tall = [10, 20, 30];
+skriv("Farge 0: " + farger[0]);</code></pre>
         </article>
 
         <article id="functions" class="syntax-card" data-topic="functions" data-languages="en,de,no">
@@ -185,12 +221,22 @@ print("First name: " + names[0]);</code></pre>
             <span>EN | DE | NO</span>
           </header>
           <p>Eigene Funktionen mit return/zurück/retur.</p>
-          <pre><code>def greet(name) {
+          <pre class="syntax-code" data-lang="de"><code>funktion begrüß(name) {
+    zurück "Hallo " + name;
+}
+
+funktion addiere(a, b) {
+    zurück a + b;
+}</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>def greet(name) {
     return "Hello " + name;
 }
 
-funktion begrüß(name) {
-    zurück "Hallo " + name;
+def add(a, b) {
+    return a + b;
+}</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>funksjon hils(person) {
+    retur "Hei " + person;
 }
 
 funksjon sum(a, b) {
@@ -204,14 +250,15 @@ funksjon sum(a, b) {
             <span>Read | Write | Append</span>
           </header>
           <p>Dateien lesen, schreiben, erweitern und Existenz pruefen.</p>
-          <pre><code>fileContent = File.Read("beispiel.txt");
-File.Write("output.txt", "Hsaidhasiudhasoj.");
-File.Append("beispiel2.txt", "\nNeue Zeile angehängt.");
-
-dateiInhalt = Datei.lies("output.txt");
+          <pre class="syntax-code" data-lang="de"><code>dateiInhalt = Datei.lies("output.txt");
 Datei.schreibe("beispiel2.txt", "Das ist ein Test.");
-
-Fil.skriv("norsk.txt", "Hei fra Leap");</code></pre>
+Datei.anhängen("beispiel2.txt", "\tNoch eine angehängte Zeile.");</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>fileContent = File.Read("beispiel.txt");
+File.Write("output.txt", "Hsaidhasiudhasoj.");
+File.Append("beispiel2.txt", "\nNew line appended.");</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>filInnhold = Fil.les("norsk.txt");
+Fil.skriv("norsk.txt", "Hei fra Leap");
+Fil.leggTil("norsk.txt", "\nNy linje");</code></pre>
         </article>
 
         <article id="strings" class="syntax-card" data-topic="strings" data-languages="en,de,no">
@@ -220,16 +267,15 @@ Fil.skriv("norsk.txt", "Hei fra Leap");</code></pre>
             <span>EN | DE | NO</span>
           </header>
           <p>Viele eingebaute Methoden fuer Textmanipulation.</p>
-          <pre><code>s = "  Hallo Welt  ";
-print("upper: " + s.upper());
-print("trim: '" + s.trim() + "'");
-
-t = "  Grüß Gott  ";
+          <pre class="syntax-code" data-lang="de"><code>t = "  Grüß Gott  ";
 ausgeben("länge: " + t.länge());
-ausgeben("ersetze: " + t.ersetze("Gott", "Welt"));
-
-tekst = "  Hei Verden  ";
-skriv("lengde: " + tekst.lengde());</code></pre>
+ausgeben("ersetze: " + t.ersetze("Gott", "Welt"));</code></pre>
+          <pre class="syntax-code" data-lang="en"><code>s = "  Hallo Welt  ";
+print("upper: " + s.upper());
+print("trim: '" + s.trim() + "'");</code></pre>
+          <pre class="syntax-code" data-lang="no"><code>tekst = "  Hei Verden  ";
+skriv("lengde: " + tekst.lengde());
+skriv("erstatt: " + tekst.erstatt("Verden", "Leap"));</code></pre>
         </article>
       </div>
     </section>
@@ -243,19 +289,28 @@ skriv("lengde: " + tekst.lengde());</code></pre>
     let activeTopic = 'all';
     let activeLanguage = 'all';
 
+    const getDisplayedLanguage = () => (activeLanguage === 'all' ? 'de' : activeLanguage);
+
+    const setActiveButton = (buttons, key, value) => {
+      buttons.forEach((button) => {
+        button.classList.toggle('is-active', button.dataset[key] === value);
+      });
+    };
+
     const updateCards = () => {
+      const displayedLanguage = getDisplayedLanguage();
+
       cards.forEach((card) => {
         const cardTopic = card.dataset.topic;
         const supportedLanguages = (card.dataset.languages || '').split(',').filter(Boolean);
         const matchesTopic = activeTopic === 'all' || cardTopic === activeTopic;
         const matchesLanguage = activeLanguage === 'all' || supportedLanguages.includes(activeLanguage);
         card.classList.toggle('is-hidden', !(matchesTopic && matchesLanguage));
-      });
-    };
 
-    const setActiveButton = (buttons, key, value) => {
-      buttons.forEach((button) => {
-        button.classList.toggle('is-active', button.dataset[key] === value);
+        card.querySelectorAll('.syntax-code').forEach((block) => {
+          const shouldShow = matchesTopic && matchesLanguage && block.dataset.lang === displayedLanguage;
+          block.classList.toggle('is-hidden', !shouldShow);
+        });
       });
     };
 
